@@ -30,24 +30,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(type, name, balance, spend,transaction){
-  return {type, name, balance, spend,transaction };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 export default function CustomizedTables() {
-  const { transactions, getAllTransactions } = useContext(TransactionContext);
+  const { governments, getAllGovernments } = useContext(TransactionContext);
 
   useEffect(() => {
     console.log("Called");
-    getAllTransactions();
+    getAllGovernments();
   }, []);
 
 
@@ -57,22 +46,22 @@ export default function CustomizedTables() {
 
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Time</StyledTableCell>
-            <StyledTableCell align="center">From</StyledTableCell>
-            <StyledTableCell align="center">To</StyledTableCell>
-            <StyledTableCell align="center">Amount</StyledTableCell>
-            <StyledTableCell align="center">Project</StyledTableCell>
+            <StyledTableCell align="center">Government Type</StyledTableCell>
+            <StyledTableCell align="center">Government Name</StyledTableCell>
+            <StyledTableCell align="center">Balance</StyledTableCell>
+            <StyledTableCell align="center">Spend</StyledTableCell>
+            <StyledTableCell align="center">Transactions</StyledTableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
-          {transactions.map((transaction) => (
-            <StyledTableRow key={transaction.timestamp}>
-              <StyledTableCell align="center" >{transaction.timestamp} </StyledTableCell>
-              <StyledTableCell align="center">{transaction.fromName}</StyledTableCell>
-              <StyledTableCell align="center">{transaction.toName}</StyledTableCell>
-              <StyledTableCell align="center">{transaction.amount}</StyledTableCell>
-              <StyledTableCell align="center">{transaction.project}</StyledTableCell>
+          {governments.map((government) => (
+            <StyledTableRow key={government.name}>
+              <StyledTableCell align="center" >{government.gov_type} </StyledTableCell>
+              <StyledTableCell align="center">{government.name}</StyledTableCell>
+              <StyledTableCell align="center">{government.balance}</StyledTableCell>
+              <StyledTableCell align="center">{government.spend}</StyledTableCell>
+              <StyledTableCell align="center">View all</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

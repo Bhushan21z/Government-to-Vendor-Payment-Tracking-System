@@ -2,14 +2,14 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import { Grid } from "@mui/material"
 import Form from '../components/form'
-import Leftbar from '../components/leftbar'
+import Leftbar from '../components/leftbar2'
 import Rightbar from '../components/rightbar'
 import Dashboard from '../components/dashboard'
 import { Divider } from '@mui/material'
 import { useContext, useEffect } from "react";
 import { TransactionContext } from "../context/TransactionContext";
 
-const Centralpage = () => {
+const Governmentpage = () => {
 
   return (
     <div>
@@ -35,7 +35,7 @@ const Centralpage = () => {
 
 
             <Grid  item xs={2} > 
-            <Rightbar />
+            {/* <Rightbar /> */}
             
             </Grid>
 
@@ -46,4 +46,4 @@ const Centralpage = () => {
   )
 }
 
-export default Centralpage
+export default Governmentpage;

@@ -199,7 +199,7 @@ export const TransactionsProvider = ({ children }) => {
       if (ethereum) {
         const transactionsContract = createEthereumContract();
 
-        const availableTransactions = await transactionsContract.getAllTransactions();
+        const availableTransactions = await transactionsContract.getAllTrancations();
 
         const structuredTransactions = availableTransactions.map((transaction) => ({
           addressTo: transaction.to,
@@ -229,12 +229,12 @@ export const TransactionsProvider = ({ children }) => {
 
         const availableGovernment = await transactionsContract.getAllGovernment();
 
-        const structuredGovernments = availableGovernment.map((transaction) => ({
-          address: transaction.add,
-          gov_type: transaction.gov_type,
-          name: transaction.name,
-          balance: transaction.balance,
-          spend : transaction.spend 
+        const structuredGovernments = availableGovernment.map((government) => ({
+          address: government.add,
+          gov_type: government.gov_type,
+          name: government.name,
+          balance: Number(government.balance),
+          spend : Number(government.spend) 
         }));
 
         console.log(structuredGovernments);
@@ -365,7 +365,7 @@ export const TransactionsProvider = ({ children }) => {
             const transactionsCount = await transactionsContract.getTransactionCount();
 
             setTransactionCount(transactionsCount.toNumber());
-            //window.location.reload();
+            window.location.reload();
         } else {
             console.log("No ethereum object");
         }
@@ -475,7 +475,7 @@ export const TransactionsProvider = ({ children }) => {
             const transactionsCount = await transactionsContract.getTransactionCount();
 
             setTransactionCount(transactionsCount.toNumber());
-            // window.location.reload();
+            window.location.reload();
         } else {
             console.log("No ethereum object");
         }
