@@ -1,15 +1,21 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import { Grid } from "@mui/material"
-import Form from '../components/form'
-import Leftbar from '../components/leftbar2'
-import Rightbar from '../components/rightbar'
-import Dashboard from '../components/dashboard'
-import { Divider } from '@mui/material'
 import { useContext, useEffect } from "react";
 import { TransactionContext } from "../context/TransactionContext";
+import Navbar from '../components/Navbar'
+import { Grid, Typography } from "@mui/material"
+import Form from '../components/form2'
+import Leftbar from '../components/leftbar2'
+import Dashboard from '../components/dashboard2'
+import { Divider } from '@mui/material'
+
 
 const Governmentpage = () => {
+    const { GovernmentDetails, govDetails } = useContext(TransactionContext);
+
+    useEffect(() => {
+      console.log("Called");
+      GovernmentDetails();
+    }, []);
 
   return (
     <div>
@@ -27,8 +33,17 @@ const Governmentpage = () => {
             </Grid>
 
 
-
             <Grid item xs={8}   > 
+            <Typography 
+            sx={{
+                textAlign: 'center',
+                mt: '1rem',
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#000',
+                
+            }}
+            >{govDetails.name}</Typography>
             <Form />
             <Dashboard />
             </Grid>

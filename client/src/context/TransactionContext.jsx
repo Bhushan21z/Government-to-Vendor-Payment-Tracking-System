@@ -296,8 +296,8 @@ export const TransactionsProvider = ({ children }) => {
             address: details.address,
             gov_type: details.gov_type,
             name: details.name,
-            balance: details.name,
-            spend: details.spend
+            balance: Number(details.balance),
+            spend: Number(details.spend)
         }
         setGovDetails(det);
 
@@ -492,14 +492,14 @@ export const TransactionsProvider = ({ children }) => {
             const { amount, to, project } = formData4;
             const transactionsContract = createEthereumContract();
 
-            const transactionHash = await transactionsContract.AllocateFunds(amount,to,project);
+            const transactionHash = await transactionsContract.TransferFunds(amount,to,project);
             console.log(`Loading - ${transactionHash.hash}`);
             await transactionHash.wait();
             console.log(`Success - ${transactionHash.hash}`);
             const transactionsCount = await transactionsContract.getTransactionCount();
 
             setTransactionCount(transactionsCount.toNumber());
-            // window.location.reload();
+            window.location.reload();
         } else {
             console.log("No ethereum object");
         }

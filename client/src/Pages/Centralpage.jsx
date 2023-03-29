@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import { Grid } from "@mui/material"
+import { Grid, Typography } from "@mui/material"
 import Form from '../components/form'
 import Leftbar from '../components/leftbar'
 import Rightbar from '../components/rightbar'
@@ -29,6 +29,16 @@ const Centralpage = () => {
 
 
             <Grid item xs={8}   > 
+            <Typography 
+            sx={{
+                textAlign: 'center',
+                mt: '1rem',
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#000',
+                
+            }}
+            >Central</Typography>
             <Form />
             <Dashboard />
             </Grid>

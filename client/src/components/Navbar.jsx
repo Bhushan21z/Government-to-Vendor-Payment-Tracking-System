@@ -67,7 +67,7 @@ function DrawerAppBar(props) {
     const log= await connectGovernmentWallet();
     console.log(log);
     if(log==true){
-        navigate("/central");
+        navigate("/government");
     }
     else{
         console.log("NO Central Account");

@@ -10,24 +10,12 @@ const btn={
     m: 1,
 }
 
-const Input = ({ placeholder, name, type, value, handleChange }) => (
-  <input
-    placeholder={placeholder}
-    type={type}
-    step="0.0001"
-    value={value}
-    onChange={(e) => handleChange(e, name)}
-    className=" w-full rounded-sm p-2 border border-gray-300 "
-  />
-);
-
-
 const leftbar2 = () => {
-  const { formData2, handleChange2, AddFunds, getBalance, balance, spend, checkIfCentralIsConnect } = useContext(TransactionContext);
+  const { GovernmentDetails, govDetails } = useContext(TransactionContext);
 
   useEffect(() => {
     console.log("Called");
-    checkIfCentralIsConnect();
+    GovernmentDetails();
   }, []);
 
 
@@ -42,8 +30,8 @@ const leftbar2 = () => {
             p: 5,
             
         }}>
-            <Button variant="contained" sx={btn} >Blance : {balance} </Button>
-            <Button variant="contained"  sx={btn}>Spend : {spend}</Button>
+            <Button variant="contained" sx={btn} >Blance : {govDetails.balance} </Button>
+            <Button variant="contained"  sx={btn}>Spend : {govDetails.spend}</Button>
 
 
         </Grid>
