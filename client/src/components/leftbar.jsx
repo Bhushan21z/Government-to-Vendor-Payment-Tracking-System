@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TransactionContext } from "../context/TransactionContext";
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -23,14 +23,19 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 
 const leftbar = () => {
-  const { formData2, handleChange2, AddFunds, getBalance, balance } = useContext(TransactionContext);
+  const { formData2, handleChange2, AddFunds, getBalance, balance, spend, checkIfCentralIsConnect } = useContext(TransactionContext);
+
+  useEffect(() => {
+    console.log("Called");
+    checkIfCentralIsConnect();
+  }, []);
 
   const handleSubmit = async (e) => {
     console.log(formData2);
     e.preventDefault();
-    awaitAddFunds();
-    await getBalance();
-    console.log(balance);
+    AddFunds();
+    //await getBalance();
+    //console.log(balance);
   };
 
   return (
@@ -44,8 +49,8 @@ const leftbar = () => {
             p: 5,
             
         }}>
-            <Button variant="contained" sx={btn} >Balance </Button>
-            <Button variant="contained"  sx={btn}>Spend</Button>
+            <Button variant="contained" sx={btn} >Blance : {balance} </Button>
+            <Button variant="contained"  sx={btn}>Spend : {spend}</Button>
 
             <Input placeholder="Enter Amount" name="amount" type="number" handleChange={handleChange2} />
 

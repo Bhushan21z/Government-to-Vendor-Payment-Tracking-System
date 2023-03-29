@@ -22,9 +22,9 @@ function RegisterForm() {
     const handleSubmit = async (e) => {
       console.log(formData1);
       e.preventDefault();
-      //RegisterGovernment();
-      await GovernmentDetails();
-      console.log(govDetails);
+      RegisterGovernment();
+      //await GovernmentDetails();
+      //console.log(govDetails);
       //sendTransaction();
     };
 

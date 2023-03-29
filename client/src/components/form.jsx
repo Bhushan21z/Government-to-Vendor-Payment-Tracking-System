@@ -25,7 +25,14 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 const text = { padding: 2, margin: "3px 0" , width: "200px" };
 const form = () => {
-  const { currentAccount, connectWallet, formData1, handleChange, isLoading } = useContext(TransactionContext);
+  const { formData3, handleChange3, AllocateFunds } = useContext(TransactionContext);
+
+  const handleSubmit = async (e) => {
+    console.log(formData3);
+    e.preventDefault();
+    AllocateFunds();
+  };
+
   return (
     <div>
   
@@ -59,7 +66,7 @@ const form = () => {
                 rowGap: '2rem',
                width: '100%',
             }}>
-          <form  >
+          <form onSubmit={handleSubmit} >
             
             <Grid item xs={12} sx={{
                 display: 'flex',
@@ -69,7 +76,7 @@ const form = () => {
                 my: '1rem',
             }}>
             <Typography sx={text}> Receiver </Typography>
-            <Input placeholder="Receiver" name="address" type="text"  handleChange={handleChange} />
+            <Input placeholder="Receiver" name="to" type="text"  handleChange={handleChange3} />
             </Grid>
 
             <Grid item xs={12} sx={{
@@ -80,7 +87,7 @@ const form = () => {
                   my: '1rem',
             }}>
             <Typography sx={text}> Project </Typography>
-            <Input placeholder=" Project Name" name="address" type="text"  handleChange={handleChange} />
+            <Input placeholder=" Project Name" name="project" type="text"  handleChange={handleChange3} />
             </Grid>
 
 
@@ -92,7 +99,7 @@ const form = () => {
                   my: '1rem',
             }}>
             <Typography sx={text}> Amount </Typography>
-            <Input placeholder="Amount" name="address" type="text"  handleChange={handleChange} />
+            <Input placeholder="Amount" name="amount" type="number"  handleChange={handleChange3} />
             </Grid>
 
         
@@ -107,7 +114,7 @@ const form = () => {
                 backgroundColor: '#c01630',
              }}
             >
-              Sign up
+              Send Funds
             </Button>
           </form>
           

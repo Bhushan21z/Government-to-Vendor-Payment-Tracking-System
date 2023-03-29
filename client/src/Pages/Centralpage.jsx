@@ -6,8 +6,14 @@ import Leftbar from '../components/leftbar'
 import Rightbar from '../components/rightbar'
 import Dashboard from '../components/dashboard'
 import { Divider } from '@mui/material'
+import { useContext, useEffect } from "react";
+import { TransactionContext } from "../context/TransactionContext";
 
 const Centralpage = () => {
+  // const { checkIfCentralIsConnect, balance, spend } = useContext(TransactionContext);
+  // useEffect(() => {
+  //   checkIfCentralIsConnect();
+  // }, []);
   return (
     <div>
        
