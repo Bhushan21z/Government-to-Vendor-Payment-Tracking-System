@@ -1,13 +1,24 @@
-import React from 'react'
-import {Welcome, Footer, Transactions } from "../components";
+import React from "react";
 import Navbar from "../components/Navbar";
+import HeroHome from "../components/HeroHome";
+import FeaturesBlocks from "../components/FeaturesBlocks";
+import Newsletter from "../components/Newsletter";
+import Footer from "../components/Footer";
 
-const Homepage = () => {
+
+function Homepage() {
   return (
-    <div>
-        <Navbar />
+    <div className="flex flex-col min-h-screen overflow-hidden ">
+
+      <Navbar />
+      <main className="grow">
+        <HeroHome />
+        <FeaturesBlocks />
+        <Newsletter />
+      </main>
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default Homepage
+export default Homepage;
