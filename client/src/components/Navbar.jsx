@@ -1,132 +1,96 @@
 import React, { useContext } from "react";
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-// import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import { TransactionContext } from "../context/TransactionContext";
 import { useNavigate } from "react-router-dom";
+import { Divider } from "@mui/material";
 
+const styles = {
+  btn: {
+    color: "#2952e3",
+    fontSize: "20px",
+    textTransform: "none",
+    "&:hover": {
+      color: "#2952e3",
+      fontWeight: "bold",
+      fontSize: "20px",
+      border: "1px solid #2952e3",
+      borderRadius: "5px",
+      padding: "5px",
+    },
+  },
+};
 
-const drawerWidth = 240;
-const navItems = ['Central ', 'Government', 'Vendor'];
-
-function DrawerAppBar(props) {
-  const { connectCentralWallet, connectGovernmentWallet } = useContext(TransactionContext);
+function Navbar(props) {
+  const { connectCentralWallet, connectGovernmentWallet } =
+    useContext(TransactionContext);
   const navigate = useNavigate();
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
-  };
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Payment Processing System
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
-  const container = window !== undefined ? () => window().document.body : undefined;
-
-   const login1 = async () => {
-    const log= await connectCentralWallet();
+  const login1 = async () => {
+    const log = await connectCentralWallet();
     console.log(log);
-    if(log==true){
-        navigate("/central");
-    }
-    else{
-        console.log("NO Central Account");
+    if (log == true) {
+      navigate("/central");
+    } else {
+      console.log("NO Central Account");
     }
   };
 
   const login2 = async () => {
-    const log= await connectGovernmentWallet();
+    const log = await connectGovernmentWallet();
     console.log(log);
-    if(log==true){
-        navigate("/government");
-    }
-    else{
-        console.log("NO Central Account");
+    if (log == true) {
+      navigate("/government");
+    } else {
+      console.log("NO Central Account");
     }
   };
 
-
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar component="nav" sx={{
-        backgroundColor: '#2a3750',
-      }}>
+    <Box sx={{ display: "flex" }}>
+      <AppBar
+        component="nav"
+        sx={{
+          backgroundColor: "white",
+          boxShadow: "none",
+        }}
+      >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            {/* <MenuIcon /> */}
-          </IconButton>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{
+              flexGrow: 1,
+              color: "#2952e3",
+              fontWeight: "bold",
+            }}
           >
-       Payment Processing System
+            Payment Processing System
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-           
-            <Button color="inherit"  onClick={login1} 
-             >Central</Button>
-            <Button color="inherit" onClick={login2}  >Government</Button>
-            <Button color="inherit" >Vendor</Button>
-
+          <Box
+            sx={{
+              display: { xs: "none", sm: "block" },
+              spacing: 2,
+            }}
+          >
+            <Button onClick={login1} sx={styles.btn}>
+              Central
+            </Button>
+            <Button onClick={login2} sx={styles.btn}>
+              Government
+            </Button>
+            <Button color="inherit" sx={styles.btn}>
+              Vendor
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
-      <Box component="nav">
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
     </Box>
   );
 }
 
-export default DrawerAppBar;
+export default Navbar;
