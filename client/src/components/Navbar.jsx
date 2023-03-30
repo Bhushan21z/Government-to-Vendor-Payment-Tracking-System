@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,13 +6,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { TransactionContext } from "../context/TransactionContext";
 import { useNavigate } from "react-router-dom";
-import { Divider } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const styles = {
   btn: {
     color: "#2952e3",
     fontSize: "20px",
-    textTransform: "none",
     "&:hover": {
       color: "#2952e3",
       fontWeight: "bold",
@@ -69,8 +67,12 @@ function Navbar(props) {
               fontWeight: "bold",
             }}
           >
-            Payment Processing System
+            {" "}
+            <Link to="/" style={{ textDecoration: "none" }}>
+              PayETH
+            </Link>
           </Typography>
+
           <Box
             sx={{
               display: { xs: "none", sm: "block" },

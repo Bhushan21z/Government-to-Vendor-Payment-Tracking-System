@@ -5,112 +5,118 @@ import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import RuleIcon from "@mui/icons-material/Rule";
 
+const styles = {
+  features: {
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  text: {
+    textAlign: "center",
+    color: "rgba(156, 163, 175)",
+    width: "80%",
+  },
+};
+
 function FeaturesBlocks() {
   return (
     <Grid
       container
-      className="max-w-6xl mx-auto px-4 sm:px-6"
+      xs={12}
       sx={{
-        height: "100vh",
+        height: "90vh",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        mb: "10rem",
       }}
     >
-      <div>
-        {/* Section header */}
-        <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-          <Typography
-            sx={{
-              color: "#000",
-              textTransform: "uppercase",
-              fontSize: "1rem",
-              fontWeight: "bold",
-            }}
-            variant="overline"
-          >
-            Features
-          </Typography>
+      {/* Section header */}
+      <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+        <Typography
+          sx={{
+            color: "#000",
+            textTransform: "uppercase",
+            fontSize: "1rem",
+            fontWeight: "bold",
+          }}
+          variant="overline"
+        >
+          Features
+        </Typography>
 
-          <p className="text-xl text-gray-400">
+        <p className="text-xl text-gray-400">
+          Blockchain technology is highly secure, providing an encrypted and
+          tamper-proof way to transfer funds.
+        </p>
+      </div>
+
+      {/* Items */}
+      <Grid
+        item
+        xs={10}
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: "2rem",
+        }}
+      >
+        {/* 1st item */}
+        <Grid item sx={styles.features}>
+          <SecurityIcon
+            sx={{
+              fontSize: 80,
+              color: "#2952e3",
+            }}
+          />
+          <h4 className="h4 mb-2">Increase Security</h4>
+          <Typography variant="body1" sx={styles.text}>
             Blockchain technology is highly secure, providing an encrypted and
             tamper-proof way to transfer funds.
-          </p>
-        </div>
+          </Typography>
+        </Grid>
 
-        {/* Items */}
-        <div
-          className="max-w-sm mx-auto grid gap-8 grid-cols-2  items-start  lg:max-w-none"
-          data-aos-id-blocks
-        >
-          {/* 1st item */}
-          <div
-            className="relative flex flex-col items-center "
-            data-aos="fade-up"
-            data-aos-anchor="[data-aos-id-blocks]"
-          >
-            <SecurityIcon
-              sx={{
-                fontSize: 80,
-                color: "#2952e3",
-              }}
-            />
-            <h4 className="h4 mb-2">Increase Security</h4>
-            <p className="text-lg text-gray-400 text-center">
-              Blockchain technology is highly secure, providing an encrypted and
-              tamper-proof way to transfer funds.
-            </p>
-          </div>
+        {/* 2nd item */}
+        <Grid item sx={styles.features}>
+          <CreditScoreIcon
+            sx={{
+              fontSize: 80,
+              color: "#2952e3",
+            }}
+          />
+          <h4 className="h4 mb-2">Improved transparency</h4>
 
-          {/* 2nd item */}
-          <div
-            className="relative flex flex-col items-center"
-            data-aos="fade-up"
-            data-aos-delay="100"
-            data-aos-anchor="[data-aos-id-blocks]"
-          >
-            <CreditScoreIcon
-              sx={{
-                fontSize: 80,
-                color: "#2952e3",
-              }}
-            />
-            <h4 className="h4 mb-2">Improved transparency</h4>
-            <p className="text-lg text-gray-400 text-center">
-              A transparent way to transfer funds, allowing all parties involved
-              to view the transaction history.
-            </p>
-          </div>
+          <Typography variant="body1" sx={styles.text}>
+            A transparent way to transfer funds, allowing all parties involved
+            to view the transaction history.
+          </Typography>
+        </Grid>
 
-          {/* 3rd item */}
-          <div
-            className="relative flex flex-col items-center"
-            data-aos="fade-up"
-            data-aos-delay="200"
-            data-aos-anchor="[data-aos-id-blocks]"
-          >
-            <ElectricBoltIcon sx={{ fontSize: 80, color: "#2952e3" }} />
-            <h4 className="h4 mb-2">Increased efficiency</h4>
-            <p className="text-lg text-gray-400 text-center">
-              The use of blockchain technology can provide an accessible and
-              secure way to transfer funds, helping to reduce financial
-              exclusion.
-            </p>
-          </div>
+        {/* 3rd item */}
+        <Grid item sx={styles.features}>
+          <ElectricBoltIcon sx={{ fontSize: 80, color: "#2952e3" }} />
+          <h4 className="h4 mb-2">Increased efficiency</h4>
 
-          {/* 4th item */}
-          <div
-            className="relative flex flex-col items-center"
-            data-aos="fade-up"
-            data-aos-delay="300"
-            data-aos-anchor="[data-aos-id-blocks]"
-          >
-            <RuleIcon sx={{ fontSize: 80, color: "#2952e3" }} />
-            <h4 className="h4 mb-2">Reduced corruption</h4>
-            <p className="text-lg text-gray-400 text-center">
-              Transactions on the blockchain are immutable and cannot be
-              altered.
-            </p>
-          </div>
-        </div>
-      </div>
+          <Typography variant="body1" sx={styles.text}>
+            The use of blockchain technology can provide an accessible and
+            secure way to transfer funds, helping to reduce financial exclusion.
+          </Typography>
+        </Grid>
+
+        {/* 4th item */}
+        <Grid item sx={styles.features}>
+          <RuleIcon sx={{ fontSize: 80, color: "#2952e3" }} />
+          <h4 className="h4 mb-2">Reduced corruption</h4>
+
+          <Typography variant="body1" sx={styles.text}>
+            Transactions on the blockchain are immutable and cannot be altered.
+          </Typography>
+        </Grid>
+      </Grid>
     </Grid>
   );
 }
