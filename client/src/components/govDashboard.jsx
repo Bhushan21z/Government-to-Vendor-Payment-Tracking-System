@@ -32,12 +32,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function CustomizedTables() {
-  const { governments, getAllGovernments } = useContext(TransactionContext);
+  // const { governments, getAllGovernments } = useContext(TransactionContext);
 
-  useEffect(() => {
-    console.log("Called");
-    getAllGovernments();
-  }, []);
+  // useEffect(() => {
+  //   console.log("Called");
+  //   getAllGovernments();
+  // }, []);
 
 
   return (
@@ -54,7 +54,7 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
 
-        <TableBody>
+        {/* <TableBody>
           {governments.map((government) => (
             <StyledTableRow key={government.name}>
               <StyledTableCell align="center" >{government.gov_type} </StyledTableCell>
@@ -64,7 +64,7 @@ export default function CustomizedTables() {
               <StyledTableCell align="center">View all</StyledTableCell>
             </StyledTableRow>
           ))}
-        </TableBody>
+        </TableBody> */}
       </Table>
     </TableContainer>
   );

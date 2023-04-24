@@ -25,14 +25,14 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 const text = { padding: 2, margin: "3px 0" , width: "200px" };
 const form2 = () => {
-  const { formData4, handleChange4, TransferFunds } = useContext(TransactionContext);
+  // const { formData4, handleChange4, TransferFunds } = useContext(TransactionContext);
 
-  const handleSubmit = async (e) => {
-    console.log(formData4);
-    e.preventDefault();
-    //AllocateFunds();
-    TransferFunds();
-  };
+  // const handleSubmit = async (e) => {
+  //   console.log(formData4);
+  //   e.preventDefault();
+  //   //AllocateFunds();
+  //   TransferFunds();
+  // };
 
   return (
     <div>

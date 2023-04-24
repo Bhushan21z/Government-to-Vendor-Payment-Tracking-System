@@ -5,46 +5,166 @@ pragma solidity ^0.8.0;
 // import "hardhat/console.sol";
 
 contract Funds {
+
+    ////// Contract Structure
+
     address public central;
     uint public balance;
     uint public spend;
-    uint transactionCount;
+    uint projectCount;
 
-    struct Allocated{
+    struct Installment{
+        uint project_id;
+        uint installment_no;
         uint amount;
         uint time;
+        address from;
+        string from_name;
+        address to;
+        string to_name;
+    }
+
+    struct VendorPaid {
+        uint project_id;
+        string contract_name;
+        address vendor_add;
+        string vendor_name;
+        uint amount;
+        uint time;
+        address from;
+        string from_name;
+    }
+
+    struct Contract {
+        string name;
+        address dept_add;
+        string dept_name;
+        uint status;
+        uint amount;
+    }
+
+    struct Project{
+        uint id;
+        string name;
+        uint amount;
+        uint installments;
+        uint given;
+        uint status;
+        uint curr_inst;
+        //uint level;
+        address state_add;
+        string state_name;
+        address department_add;
+        string department_name;
+        Installment[] inst;
+        VendorPaid[] vendor;
     }
 
     struct Government {
         address add;
-        string gov_type;
         string name;
         uint balance;
         uint spend;
-    }
-  
-    struct Transactions {
-        address from;
-        address to;
-        string from_name;
-        string to_name;
-        uint time;
-        uint amount;
-        string project_name;
+        uint[] projects;
     }
 
-    Allocated[] public alloc;
-    Government[] public gov;
-    Transactions[] public transactions;
+    struct Department {
+        address under;
+        string under_name;
+        address add;
+        string name;
+        uint balance;
+        uint spend;
+        uint[] projects;
+    }
 
+    struct Vendor {
+        address under;
+        string under_name;
+        address add;
+        string name;
+    }
+
+    ///// Storing Structures
+    Government[] gov;
+    Department[] dept;
+    Vendor[] vend;
+    Contract[] cont;
+    mapping(uint => Project) public projects;
+
+    ///// Contract Functions
+    // 1)Register Functions
     constructor() {
         central = msg.sender;
         balance=0;
         spend=0;
-        transactionCount=0;
-        gov.push(Government(msg.sender,"Central","Central",0,0));
+        projectCount=0;
+    }
+ 
+    function GovernmentCheck(string memory _name) public view returns (bool) {
+        uint n=gov.length;
+        for(uint i=0;i<n;i++){
+            if(keccak256(abi.encodePacked(gov[i].name)) == keccak256(abi.encodePacked(_name))){
+                return false;
+            }
+            if(msg.sender==gov[i].add){
+                return false;
+            }
+        }
+        return true;
     }
 
+    function GovernmentRegister(address _add,string memory _name) public {
+        Government memory temp;
+        temp.add=_add;
+        temp.name=_name;
+        temp.balance=0;
+        temp.spend=0;
+        gov.push(temp);
+    }
+
+    function DepartmentCheck(string memory _name) public view returns (bool) {
+        uint n=dept.length;
+        for(uint i=0;i<n;i++){
+            if(keccak256(abi.encodePacked(dept[i].name)) == keccak256(abi.encodePacked(_name))){
+                return false;
+            }
+            if(msg.sender==dept[i].add){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function DepartmentRegister(string memory _under_name,address _add,string memory _name) public {
+        Department memory temp;
+        temp.under=msg.sender;
+        temp.under_name=_under_name;
+        temp.add=_add;
+        temp.name=_name;
+        temp.balance=0;
+        temp.spend=0;
+        dept.push(temp);
+    }
+    
+    function VendorCheck(string memory _name) public view returns (bool) {
+        uint n=vend.length;
+        for(uint i=0;i<n;i++){
+            if(keccak256(abi.encodePacked(vend[i].name)) == keccak256(abi.encodePacked(_name))){
+                return false;
+            }
+            if(msg.sender==vend[i].add){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function VendorRegister(string memory _under_name,address _add,string memory _name) public {
+        vend.push(Vendor(msg.sender,_under_name,_add,_name));
+    }
+
+    // 2) Login Functions
     function CentralLogin() public view returns (bool) {
         if(msg.sender==central){
             return true;
@@ -64,18 +184,27 @@ contract Funds {
         return false;
     }
 
-    function GovernmentDetails() public view returns (Government memory) {
-        uint n=gov.length;
+    function DepartmentLogin() public view returns (bool) {
+        uint n=dept.length;
         for(uint i=0;i<n;i++){
-            if(gov[i].add == msg.sender){
-                return gov[i];
+            if(dept[i].add == msg.sender){
+                return true;
             }
         }
-        string memory e="empty";
-        Government memory empty=Government(address(0),e,e,0,0);
-        return empty;
+        return false;
     }
 
+    function VendorLogin() public view returns (bool) {
+        uint n=vend.length;
+        for(uint i=0;i<n;i++){
+            if(vend[i].add == msg.sender){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 3) Central Functions
     function GetBalance() public view returns (uint) {
         return balance;
     }
@@ -84,165 +213,165 @@ contract Funds {
         return spend;
     }
 
-    function getTransactionCount() public view returns (uint) {
-        return transactionCount;
+    function getProjectCount() public view returns (uint) {
+        return projectCount;
     }
 
     function AddFunds(uint _amount) public {
-        gov[0].balance=balance+_amount;
-        alloc.push(Allocated(_amount,block.timestamp));
         balance=balance+_amount;
     }
 
-    function getAllocatedFunds() public view returns (Allocated[] memory) {
-        return alloc;
-    }
-
-    function CheckRegister(string memory _name) public view returns (bool) {
-        uint n=gov.length;
-        for(uint i=0;i<n;i++){
-            if(keccak256(abi.encodePacked(gov[i].name)) == keccak256(abi.encodePacked(_name))){
-                return false;
-            }
-            if(msg.sender==gov[i].add){
-                return false;
-            }
+    function getAllProjects() public view returns (Project[] memory) {
+        Project[] memory allProjects = new Project[](projectCount);
+        for(uint i = 0; i < projectCount; i++) {
+            allProjects[i] = projects[i];
         }
-        //gov.push(Government(msg.sender,_govtype,_name,0,0));
-        return true;
+        return allProjects;
     }
 
-    function Register(address _add,string memory _govtype,string memory _name) public {
-        gov.push(Government(_add,_govtype,_name,0,0));
+    function ApproveProjects(uint _id) public {
+        projects[_id].status=1;
+        projects[_id].curr_inst=1;
     }
 
-    function AllocateFunds(uint _amount, string memory _to, string memory _project) public {
-        //// check if central login
+    function SendInstallment1(uint _id) public {
+        uint amt=(projects[_id].amount)/(projects[_id].installments);
+        projects[_id].given=projects[_id].given+amt;
+        projects[_id].inst.push(Installment(_id,projects[_id].curr_inst,amt,block.timestamp,central,"Central",projects[_id].state_add,projects[_id].state_name));
         uint n=gov.length;
-        uint ind;
         for(uint i=0;i<n;i++){
-            if(keccak256(abi.encodePacked(gov[i].name)) == keccak256(abi.encodePacked(_to))){
-                ind=i;
+            if(gov[i].add == projects[_id].state_add){
+                gov[i].balance=gov[i].balance+amt;
                 break;
             }
         }
-        balance=balance-_amount;
-        spend=spend+_amount;
-        gov[ind].balance=gov[ind].balance+_amount;
-        gov[0].balance=balance;
-        gov[0].spend=spend;
-        transactions.push(Transactions(central,gov[ind].add,"Central",_to,block.timestamp,_amount,_project));
-        transactionCount=transactionCount+1;
     }
 
-    function TransferFunds(uint _amount, string memory _to, string memory _project) public {
+    // 4) State Functions
+
+    function StartProject(string memory _name,uint _amount,uint _installments,string memory _state_name, string memory _dept_name) public {
+        address _state_add;
+        address _dept_add;
         uint n=gov.length;
-        uint ind_from;
-        uint ind_to;
+        uint m=dept.length;
         for(uint i=0;i<n;i++){
-            if(keccak256(abi.encodePacked(gov[i].name)) == keccak256(abi.encodePacked(_to))){
-                ind_to=i;
+            if(keccak256(abi.encodePacked(gov[i].name)) == keccak256(abi.encodePacked(_state_name))){
+                _state_add=gov[i].add;
+                gov[i].projects.push(projectCount);
+            }
+        }
+        for(uint i=0;i<m;i++){
+            if(keccak256(abi.encodePacked(dept[i].name)) == keccak256(abi.encodePacked(_dept_name))){
+                _dept_add=dept[i].add;
+                dept[i].projects.push(projectCount);
+            }
+        }
+    
+        Project storage project = projects[projectCount]; 
+
+        project.id=projectCount;
+        projectCount=projectCount+1;
+        project.name=_name;
+        project.amount=_amount;
+        project.given=0;
+        project.status=0;
+        project.curr_inst=0;
+        project.installments=_installments;
+        project.state_add=_state_add;
+        project.state_name=_state_name;
+        project.department_name=_dept_name;
+        project.department_add=_dept_add;
+
+    }
+
+    function SendInstallment2(uint _id) public {
+        uint amt=(projects[_id].amount)/(projects[_id].installments);
+        projects[_id].inst.push(Installment(_id,projects[_id].curr_inst,amt,block.timestamp,projects[_id].state_add,projects[_id].state_name,projects[_id].department_add,projects[_id].department_name));
+        projects[_id].curr_inst=projects[_id].curr_inst+1;
+        if(projects[_id].curr_inst>projects[_id].installments){
+            projects[_id].status=2;
+        }
+        uint n=dept.length;
+        for(uint i=0;i<n;i++){
+            if(dept[i].add == projects[_id].department_add){
+                dept[i].balance=dept[i].balance+amt;
                 break;
             }
         }
+    }
 
+    function getStateProjects() public view returns (Project[] memory) {
+        uint n=gov.length;
+        uint m;
+        uint it;
         for(uint i=0;i<n;i++){
             if(gov[i].add == msg.sender){
-                ind_from=i;
+                m=gov[i].projects.length;
+                it=i;
                 break;
             }
         }
-
-        gov[ind_to].balance=gov[ind_to].balance+_amount;
-        gov[ind_from].balance=gov[ind_from].balance-_amount;
-        gov[ind_from].spend=gov[ind_from].spend+_amount;
-
-        transactions.push(Transactions(msg.sender,gov[ind_to].add,gov[ind_from].name,_to,block.timestamp,_amount,_project));
-        transactionCount=transactionCount+1;
+        Project[] memory allProjects = new Project[](m);
+        for(uint i = 0; i < m; i++) {
+            allProjects[i] = projects[gov[it].projects[i]];
+        }
+        return allProjects;
     }
 
-    function getAllTrancations() public view returns (Transactions[] memory) {
-        return transactions;
+    // 5) Department Functions
+
+    function OpenContract(string memory _name,string memory _dept_name,uint _amount) public {
+        cont.push(Contract(_name,msg.sender,_dept_name,0,_amount));
     }
 
-    function getAllGovernment() public view returns (Government[] memory) {
-        return gov;
+    function getContracts() public view returns (Contract[] memory) {
+        uint n=cont.length;
+        uint m=0;
+        for(uint a=0;a<n;a++){
+            if(msg.sender==cont[a].dept_add){
+                m++;
+            }
+        }
+        Contract[] memory allContracts= new Contract[](m);
+        uint i=0;
+        for(uint a=0;a<n;a++){
+            if(msg.sender==cont[a].dept_add){
+                allContracts[i]=cont[a];
+                i=i+1;
+            }
+        }
+        return allContracts;
     }
 
-    function getAllGovernmentAllocatedTrancations() public view returns (Transactions[] memory) {
-
-        uint count=transactions.length;
-        uint n=0;
-
-        for(uint i = 0; i < count; i++) {
-            if(transactions[i].to == msg.sender){
-                n=n+1;
+    function SendToVendor(uint _id,uint _amount,string memory _vendor_name, string memory _contract_name) public {
+        uint n=dept.length;
+        uint bal=0;
+        uint it;
+        for(uint i=0;i<n;i++){
+            if(dept[i].add == projects[_id].department_add){
+                bal=dept[i].balance;
+                it=i;
+                break;
             }
         }
-
-        Transactions[] memory trans = new Transactions[](n);
-        uint it=0;
-        for(uint i = 0; i < count; i++) {
-            if(transactions[i].to == msg.sender){
-                trans[it]=transactions[i];
-                it=it+1;
+        if(bal>=_amount){
+            dept[it].balance=dept[it].balance-_amount;
+            uint m=vend.length;
+            address _vendor_add;
+            for(uint i=0;i<m;i++){
+                if(keccak256(abi.encodePacked(vend[i].name)) == keccak256(abi.encodePacked(_vendor_name))){
+                    _vendor_add=vend[i].add;
+                    break;
+                }
             }
+            projects[_id].vendor.push(VendorPaid(_id,_contract_name,_vendor_add,_vendor_name,_amount,block.timestamp,projects[_id].department_add,projects[_id].department_name));
         }
-
-        return trans;
     }
 
-    function getAllGovernmentSpendTrancations() public view returns (Transactions[] memory) {
+    // 6) Track Project
 
-        uint count=transactions.length;
-        uint n=0;
-
-        for(uint i = 0; i < count; i++) {
-            if(transactions[i].from == msg.sender){
-                n=n+1;
-            }
-        }
-
-        Transactions[] memory trans = new Transactions[](n);
-        uint it=0;
-        for(uint i = 0; i < count; i++) {
-            if(transactions[i].from == msg.sender){
-                trans[it]=transactions[i];
-                it=it+1;
-            }
-        }
-
-        return trans;
-    }
-
-    function getAllGovernmentTrancations() public view returns (Transactions[] memory) {
-
-        uint count=transactions.length;
-        uint n=0;
-
-        for(uint i = 0; i < count; i++) {
-            if(transactions[i].from == msg.sender){
-                n=n+1;
-            }
-            else if(transactions[i].to == msg.sender){
-                n=n+1;
-            }
-        }
-
-        Transactions[] memory trans = new Transactions[](n);
-        uint it=0;
-        for(uint i = 0; i < count; i++) {
-            if(transactions[i].from == msg.sender){
-                trans[it]=transactions[i];
-                it=it+1;
-            }
-            else if(transactions[i].to == msg.sender){
-                trans[it]=transactions[i];
-                it=it+1;
-            }
-        }
-
-        return trans;
+    function TrackProject(uint _id) public view returns (Project memory) {
+        return projects[_id];
     }
 
 }

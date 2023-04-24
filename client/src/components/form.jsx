@@ -25,12 +25,12 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 const text = { padding: 2, margin: "3px 0" , width: "200px" };
 const form = () => {
-  const { formData3, handleChange3, AllocateFunds } = useContext(TransactionContext);
+  // const { formData3, handleChange3, AllocateFunds } = useContext(TransactionContext);
 
   const handleSubmit = async (e) => {
-    console.log(formData3);
-    e.preventDefault();
-    AllocateFunds();
+    // console.log(formData3);
+    // e.preventDefault();
+    // AllocateFunds();
   };
 
   return (
@@ -66,7 +66,7 @@ const form = () => {
                 rowGap: '2rem',
                width: '100%',
             }}>
-          <form onSubmit={handleSubmit} >
+          {/* <form onSubmit={handleSubmit} >
             
             <Grid item xs={12} sx={{
                 display: 'flex',
@@ -116,7 +116,7 @@ const form = () => {
             >
               Send Funds
             </Button>
-          </form>
+          </form> */}
           
             </Grid>
 
@@ -127,4 +127,4 @@ const form = () => {
   )
 }
 
-export default form
+export default form;

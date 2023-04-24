@@ -17,12 +17,12 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 function RegisterForm() {
 
-    const { currentAccount, connectWallet, formData1, handleChange, isLoading, RegisterGovernment, GovernmentDetails, govDetails } = useContext(TransactionContext);
+    // const { currentAccount, connectWallet, formData1, handleChange, isLoading, RegisterGovernment, GovernmentDetails, govDetails } = useContext(TransactionContext);
 
     const handleSubmit = async (e) => {
-      console.log(formData1);
-      e.preventDefault();
-      RegisterGovernment();
+      // console.log(formData1);
+      // e.preventDefault();
+      // RegisterGovernment();
       //await GovernmentDetails();
       //console.log(govDetails);
       //sendTransaction();
@@ -53,7 +53,7 @@ function RegisterForm() {
                 rowGap: '2rem',
                width: '100%',
             }}>
-          <form onSubmit={handleSubmit} >
+          {/* <form onSubmit={handleSubmit} >
             
             <Grid item xs={12} sx={{
                 display: 'flex',
@@ -99,7 +99,7 @@ function RegisterForm() {
             >
               Add
             </Button>
-          </form>
+          </form> */}
           
             </Grid>
 
