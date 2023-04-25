@@ -23,7 +23,7 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 
 const leftbar = () => {
-  const { formData2, handleChange2, AddFunds, getBalance, balance, spend, checkIfCentralIsConnect } = useContext(TransactionContext);
+  const { formData4, handleChange4, AddFunds, getBalance, balance, spend, checkIfCentralIsConnect } = useContext(TransactionContext);
 
   useEffect(() => {
     console.log("Called");
@@ -31,11 +31,11 @@ const leftbar = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    console.log(formData2);
+    console.log(formData4);
     e.preventDefault();
     AddFunds();
-    //await getBalance();
-    //console.log(balance);
+    // //await getBalance();
+    // //console.log(balance);
   };
 
   return (
@@ -52,7 +52,7 @@ const leftbar = () => {
             <Button variant="contained" sx={btn} >Blance : {balance} </Button>
             <Button variant="contained"  sx={btn}>Spend : {spend}</Button>
 
-            <Input placeholder="Enter Amount" name="amount" type="number" handleChange={handleChange2} />
+            <Input placeholder="Enter Amount" name="amount" type="number" handleChange={handleChange4} />
 
             <Button onClick={handleSubmit} variant="contained"  sx={btn}>Add Funds</Button>
             <Button variant="contained"  sx={btn}>All Added Funds</Button>

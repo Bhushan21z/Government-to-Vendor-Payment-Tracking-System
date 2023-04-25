@@ -11,11 +11,11 @@ const btn={
 }
 
 const leftbar2 = () => {
-  const { GovernmentDetails, govDetails } = useContext(TransactionContext);
+  // const { GovernmentDetails, govDetails } = useContext(TransactionContext);
 
   useEffect(() => {
-    console.log("Called");
-    GovernmentDetails();
+    // console.log("Called");
+    // GovernmentDetails();
   }, []);
 
 
@@ -30,8 +30,8 @@ const leftbar2 = () => {
             p: 5,
             
         }}>
-            <Button variant="contained" sx={btn} >Blance : {govDetails.balance} </Button>
-            <Button variant="contained"  sx={btn}>Spend : {govDetails.spend}</Button>
+            <Button variant="contained" sx={btn} >Blance : govDetails.balance </Button>
+            <Button variant="contained"  sx={btn}>Spend : govDetails.spend</Button>
 
 
         </Grid>

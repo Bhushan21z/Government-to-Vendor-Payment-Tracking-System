@@ -43,12 +43,12 @@ const rows = [
 ];
 
 export default function CustomizedTables() {
-  const { transactions, getAllTransactions } = useContext(TransactionContext);
+  // const { transactions, getAllTransactions } = useContext(TransactionContext);
 
-  useEffect(() => {
-    console.log("Called");
-    getAllTransactions();
-  }, []);
+  // useEffect(() => {
+  //   console.log("Called");
+  //   getAllTransactions();
+  // }, []);
 
 
   return (
@@ -65,7 +65,7 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
 
-        <TableBody>
+        {/* <TableBody>
           {transactions.map((transaction) => (
             <StyledTableRow key={transaction.timestamp}>
               <StyledTableCell align="center" >{transaction.timestamp} </StyledTableCell>
@@ -75,7 +75,7 @@ export default function CustomizedTables() {
               <StyledTableCell align="center">{transaction.project}</StyledTableCell>
             </StyledTableRow>
           ))}
-        </TableBody>
+        </TableBody> */}
       </Table>
     </TableContainer>
   );

@@ -24,8 +24,8 @@ const styles = {
 };
 
 function Navbar(props) {
-  const { connectCentralWallet, connectGovernmentWallet } =
-    useContext(TransactionContext);
+  // const { connectCentralWallet, connectGovernmentWallet } =useContext(TransactionContext);
+  const { connectCentralWallet, connectGovernmentWallet, connectDepartmentWallet,connectVendorWallet } =useContext(TransactionContext);
   const navigate = useNavigate();
 
   const login1 = async () => {
@@ -40,6 +40,26 @@ function Navbar(props) {
 
   const login2 = async () => {
     const log = await connectGovernmentWallet();
+    console.log(log);
+    if (log == true) {
+      navigate("/government");
+    } else {
+      console.log("NO Central Account");
+    }
+  };
+
+  const login3 = async () => {
+    const log = await connectDepartmentWallet();
+    console.log(log);
+    if (log == true) {
+      navigate("/government");
+    } else {
+      console.log("NO Central Account");
+    }
+  };
+
+  const login4 = async () => {
+    const log = await connectVendorWallet();
     console.log(log);
     if (log == true) {
       navigate("/government");
@@ -85,7 +105,10 @@ function Navbar(props) {
             <Button onClick={login2} sx={styles.btn}>
               Government
             </Button>
-            <Button color="inherit" sx={styles.btn}>
+            <Button onClick={login3} sx={styles.btn}>
+              Department
+            </Button>
+            <Button onClick={login4} sx={styles.btn}>
               Vendor
             </Button>
           </Box>

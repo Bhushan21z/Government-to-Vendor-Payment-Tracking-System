@@ -16,44 +16,35 @@ const createEthereumContract = () => {
 };
 
 export const TransactionsProvider = ({ children }) => {
-  ///////// Input Datas
-  const [formData1, setformData1] = useState({ address: "", govtype: "", name: ""});
-  const [formData2, setformData2] = useState({ amount: 0});
-  const [formData3, setformData3] = useState({ amount:0, to:"", project:""});
-  const [formData4, setformData4] = useState({ amount:0, to:"", project:""});
-
   ///////////////////
   const [currentAccount, setCurrentAccount] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [transactionCount, setTransactionCount] = useState(localStorage.getItem("transactionCount"));
-  const [transactions, setTransactions] = useState([]);
-  const [governments, setGovernments] = useState([]);
-  const [govTransactions, setGovTransactions] = useState([]);
-  const [balance, setBalance] = useState(0);
-  const [spend, setSpend] = useState(0);
-  //////////////////////
+  ////////////////////// Login
   const [cLogin, setCLogin] = useState(false);
   const [govLogin, setGovLogin] = useState(false);
-  const [govDetails, setGovDetails] = useState({address:"", gov_type:"", name:"", balance:0, spend:0});
-  const [allocFunds, setAllocFunds] = useState([]);
-  const [alreadyGov, setAlreadyGov] = useState(true);
-
-  const handleChange = (e, name) => {
+  const [deptLogin, setDeptLogin] = useState(false);
+  const [vendorLogin, setVendorLogin] = useState(false);
+  ///////////////////// Register
+  const [formData1, setformData1] = useState({ address: "", name: ""});
+  const handleChange1 = (e, name) => {
     setformData1((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
-
+  const [formData2, setformData2] = useState({ under_name:"",address: "", name: ""});
   const handleChange2 = (e, name) => {
     setformData2((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
-
+  const [formData3, setformData3] = useState({ under_name:"",address: "", name: ""});
   const handleChange3 = (e, name) => {
     setformData3((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
-
+  const [already, setAlready] = useState(false);
+  ///////////////////// Central
+  const [balance, setBalance] = useState(0);
+  const [spend, setSpend] = useState(0);
+  const [formData4, setformData4] = useState({ amount: 0});
   const handleChange4 = (e, name) => {
     setformData4((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
-
 
   /////////////////////////////////////////////////////////////////////
   /////// Pages Function Calling Functions
@@ -79,7 +70,6 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
-
   const checkIfWalletIsConnect = async () => {
     try {
       if (!ethereum) return alert("Please install MetaMask.");
@@ -88,9 +78,6 @@ export const TransactionsProvider = ({ children }) => {
 
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
-        //AddFunds();
-        //getBalance();
-        // getAllTransactions();
       } else {
         console.log("No accounts found");
       }
@@ -103,7 +90,7 @@ export const TransactionsProvider = ({ children }) => {
     try {
       if (ethereum) {
         const transactionsContract = createEthereumContract();
-        const currentTransactionCount = await transactionsContract.getTransactionCount();
+        const currentTransactionCount = await transactionsContract.getProjectCount();
 
         window.localStorage.setItem("transactionCount", currentTransactionCount);
       }
@@ -162,6 +149,50 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  const connectDepartmentWallet = async () => {
+    try {
+      if (!ethereum) return alert("Please install MetaMask.");
+      const accounts = await ethereum.request({ method: "eth_requestAccounts", });
+      const log=await DepartmentLogin();
+      console.log(log);
+      if(log){
+        console.log("llllll");
+        setCurrentAccount(accounts[0]);
+        return true;
+      }
+      else{
+        return false;
+      }
+      //window.location.reload();
+    } catch (error) {
+      console.log(error);
+      return false;
+      throw new Error("No ethereum object");
+    }
+  };
+
+  const connectVendorWallet = async () => {
+    try {
+      if (!ethereum) return alert("Please install MetaMask.");
+      const accounts = await ethereum.request({ method: "eth_requestAccounts", });
+      const log=await VendorLogin();
+      console.log(log);
+      if(log){
+        console.log("llllll");
+        setCurrentAccount(accounts[0]);
+        return true;
+      }
+      else{
+        return false;
+      }
+      //window.location.reload();
+    } catch (error) {
+      console.log(error);
+      return false;
+      throw new Error("No ethereum object");
+    }
+  };
+
   const connectWallet = async () => {
     try {
       if (!ethereum) return alert("Please install MetaMask.");
@@ -174,77 +205,6 @@ export const TransactionsProvider = ({ children }) => {
       console.log(error);
       return false;
       throw new Error("No ethereum object");
-    }
-  };
-
-  /////////////////////////////////////////////////////////////////////
-  /////// Funds Functions
-  /////////////////////////////////////////////////////////////////////
-  // centralLogin,
-  // governmentLogin,
-  // GovernmentDetails,
-  // getBalance,
-  // getSpend,
-  // AddFunds,
-  // getAddedFunds,
-  // CheckRegisterGovernment,
-  // RegisterGovernment,
-  // AllocateFunds,
-  // TransferFunds,
-  // getAllGovernmentTrancations,
-  // getAllTransactions
-  
-  const getAllTransactions = async () => {
-    try {
-      if (ethereum) {
-        const transactionsContract = createEthereumContract();
-
-        const availableTransactions = await transactionsContract.getAllTrancations();
-
-        const structuredTransactions = availableTransactions.map((transaction) => ({
-          addressTo: transaction.to,
-          addressFrom: transaction.from,
-          toName: transaction.to_name,
-          fromName: transaction.from_name,
-          timestamp: new Date(transaction.time.toNumber() * 1000).toLocaleString(),
-          amount: parseInt(transaction.amount),
-          project: transaction.project_name
-        }));
-
-        console.log(structuredTransactions);
-
-        setTransactions(structuredTransactions);
-      } else {
-        console.log("Ethereum is not present");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getAllGovernments = async () => {
-    try {
-      if (ethereum) {
-        const transactionsContract = createEthereumContract();
-
-        const availableGovernment = await transactionsContract.getAllGovernment();
-
-        const structuredGovernments = availableGovernment.map((government) => ({
-          address: government.add,
-          gov_type: government.gov_type,
-          name: government.name,
-          balance: Number(government.balance),
-          spend : Number(government.spend) 
-        }));
-
-        console.log(structuredGovernments);
-
-        setGovernments(structuredGovernments);
-      } else {
-        console.log("Ethereum is not present");
-      }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -285,122 +245,56 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
-  const GovernmentDetails = async () => {
+  const DepartmentLogin = async () => {
     try {
       if (ethereum) {
         const transactionsContract = createEthereumContract();
 
-        const details = await transactionsContract.GovernmentDetails();
-        console.log(details);
-        const det={
-            address: details.address,
-            gov_type: details.gov_type,
-            name: details.name,
-            balance: Number(details.balance),
-            spend: Number(details.spend)
-        }
-        setGovDetails(det);
+        const login = await transactionsContract.DepartmentLogin();
+        console.log(login);
+        setDeptLogin(login);
+        return login;
 
       } else {
         console.log("Ethereum is not present");
+        return false;
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getBalance = async () => {
+  const VendorLogin = async () => {
     try {
       if (ethereum) {
         const transactionsContract = createEthereumContract();
 
-        const bal = await transactionsContract.GetBalance();
-        console.log(bal);
-        const num= Number(bal);
-        setBalance(num);
-        console.log(balance);
+        const login = await transactionsContract.VendorLogin();
+        console.log(login);
+        setVendorLogin(login);
+        return login;
+
       } else {
         console.log("Ethereum is not present");
+        return false;
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getSpend = async () => {
-    try {
-      if (ethereum) {
-        const transactionsContract = createEthereumContract();
-
-        const spe = await transactionsContract.GetSpend();
-        console.log(spe);
-        const num= Number(spe);
-        setSpend(num);
-        console.log(spend);
-
-      } else {
-        console.log("Ethereum is not present");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-    const AddFunds = async () => {
-        try {
-        if (ethereum) {
-            const { amount } = formData2;
-            const pamount= parseInt(amount);
-            const transactionsContract = createEthereumContract();
-            //const parsedAmount = parseInt(amount);
-
-            const transactionHash = await transactionsContract.AddFunds(pamount);
-            // const transactionHash = await transactionsContract.AddFunds(1000);
-            console.log("Funds Added");
-            // setIsLoading(true);
-            console.log(`Loading - ${transactionHash.hash}`);
-            await transactionHash.wait();
-            console.log(`Success - ${transactionHash.hash}`);
-            // setIsLoading(false);
-            const transactionsCount = await transactionsContract.getTransactionCount();
-
-            setTransactionCount(transactionsCount.toNumber());
-            window.location.reload();
-        } else {
-            console.log("No ethereum object");
-        }
-        } catch (error) {
-        console.log(error);
-
-        throw new Error("No ethereum object");
-        }
-  };
-
-  const getAddedFunds = async () => {
-    try {
-      if (ethereum) {
-        const transactionsContract = createEthereumContract();
-
-        const alloc = await transactionsContract.getAllocatedFunds();
-        console.log(alloc);
-        setAllocFunds(alloc);
-
-      } else {
-        console.log("Ethereum is not present");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  /////////////////////////////////////////////////////////////////////
+  /////// Register Functions
+  /////////////////////////////////////////////////////////////////////
 
   const CheckRegisterGovernment = async () => {
     try {
     if (ethereum) {
-        const { address, gov_type, name } = formData1;
+        const { address, name } = formData1;
         const transactionsContract = createEthereumContract();
 
-        const checkReg = await transactionsContract.CheckRegister(name);
-        setAlreadyGov(checkReg);
+        const checkReg = await transactionsContract.GovernmentCheck(name);
+        setAlready(checkReg);
     } else {
         console.log("No ethereum object");
     }
@@ -414,21 +308,16 @@ export const TransactionsProvider = ({ children }) => {
   const RegisterGovernment = async () => {
     try {
     if (ethereum) {
-        const { address, govtype, name } = formData1;
+        const { address, name } = formData1;
         const transactionsContract = createEthereumContract();
+        const transaction = await transactionsContract.GovernmentRegister(address, name);
 
-
-        const transaction = await transactionsContract.Register(address, govtype, name);
-        // console.log(transaction.hash)
-        //const transaction = await transactionsContract.Register(amount);
-
-        // setIsLoading(true);
         console.log(`Loading - ${transaction.hash}`);
         // await transactionHash.wait();
         console.log(`Success - ${transaction.hash}`);
         // setIsLoading(false);
 
-        window.location.reload();
+        // window.location.reload();
     } else {
         console.log("No ethereum object");
     }
@@ -439,105 +328,157 @@ export const TransactionsProvider = ({ children }) => {
     }
  };
 
-//  const checkRegPlusRegisterGovernment = async () => {
-//     try {
-//     if (ethereum) {
-//         const { address, gov_type, name } = formData1;
-//         const transactionsContract = createEthereumContract();
-//         const checkReg = await transactionsContract.CheckRegister(name);
-//         setAlreadyGov(checkReg);
-//         if(checkReg == true){
-//             const transaction = await transactionsContract.Register(address, gov_type, name);
-//             window.location.reload();
-//         }
+ const CheckRegisterDepartment = async () => {
+  try {
+  if (ethereum) {
+      const { under_name, address, name } = formData2;
+      const transactionsContract = createEthereumContract();
 
-//     } else {
-//         console.log("No ethereum object");
-//     }
-//     } catch (error) {
-//     console.log(error);
+      const checkReg = await transactionsContract.DepartmentCheck(name);
+      setAlready(checkReg);
+  } else {
+      console.log("No ethereum object");
+  }
+  } catch (error) {
+      console.log(error);
+      throw new Error("No ethereum object");
+  }
+};
 
-//     throw new Error("No ethereum object");
-//     }
-//  };
+const RegisterDepartment = async () => {
+  try {
+  if (ethereum) {
+    const { under_name, address, name } = formData2;
+      const transactionsContract = createEthereumContract();
+      const transaction = await transactionsContract.DepartmentRegister(under_name,address, name);
 
+      console.log(`Loading - ${transaction.hash}`);
+      // await transactionHash.wait();
+      console.log(`Success - ${transaction.hash}`);
+      // setIsLoading(false);
 
-    const AllocateFunds = async () => {
-        try {
-        if (ethereum) {
-            const { amount, to, project } = formData3;
-            const transactionsContract = createEthereumContract();
+      // window.location.reload();
+  } else {
+      console.log("No ethereum object");
+  }
+  } catch (error) {
+  console.log(error);
 
-            const transactionHash = await transactionsContract.AllocateFunds(amount,to,project);
-            console.log(`Loading - ${transactionHash.hash}`);
-            await transactionHash.wait();
-            console.log(`Success - ${transactionHash.hash}`);
-            const transactionsCount = await transactionsContract.getTransactionCount();
+  throw new Error("No ethereum object");
+  }
+};
 
-            setTransactionCount(transactionsCount.toNumber());
-            window.location.reload();
-        } else {
-            console.log("No ethereum object");
-        }
-        } catch (error) {
-        console.log(error);
+const CheckRegisterVendor = async () => {
+  try {
+  if (ethereum) {
+    const { under_name, address, name } = formData3;
+      const transactionsContract = createEthereumContract();
 
-        throw new Error("No ethereum object");
-        }
-    };
+      const checkReg = await transactionsContract.VendorCheck(name);
+      setAlready(checkReg);
+  } else {
+      console.log("No ethereum object");
+  }
+  } catch (error) {
+  console.log(error);
 
-    const TransferFunds = async () => {
-        try {
-        if (ethereum) {
-            const { amount, to, project } = formData4;
-            const transactionsContract = createEthereumContract();
+  throw new Error("No ethereum object");
+  }
+};
 
-            const transactionHash = await transactionsContract.TransferFunds(amount,to,project);
-            console.log(`Loading - ${transactionHash.hash}`);
-            await transactionHash.wait();
-            console.log(`Success - ${transactionHash.hash}`);
-            const transactionsCount = await transactionsContract.getTransactionCount();
+const RegisterVendor = async () => {
+  try {
+  if (ethereum) {
+    const { under_name, address, name } = formData3;
+      const transactionsContract = createEthereumContract();
+      const transaction = await transactionsContract.VendorRegister(under_name,address, name);
 
-            setTransactionCount(transactionsCount.toNumber());
-            window.location.reload();
-        } else {
-            console.log("No ethereum object");
-        }
-        } catch (error) {
-        console.log(error);
+      console.log(`Loading - ${transaction.hash}`);
+      // await transactionHash.wait();
+      console.log(`Success - ${transaction.hash}`);
+      // setIsLoading(false);
 
-        throw new Error("No ethereum object");
-        }
-    };
+      // window.location.reload();
+  } else {
+      console.log("No ethereum object");
+  }
+  } catch (error) {
+  console.log(error);
 
-    const getAllGovernmentTrancations = async () => {
-        try {
-          if (ethereum) {
-            const transactionsContract = createEthereumContract();
-    
-            const availableTransactions = await transactionsContract.getAllGovernmentTrancations();
-    
-            const structuredTransactions = availableTransactions.map((transaction) => ({
-              addressTo: transaction.to,
-              addressFrom: transaction.from,
-              toName: transaction.to_name,
-              fromName: transaction.from_name,
-              timestamp: new Date(transaction.time.toNumber() * 1000).toLocaleString(),
-              amount: parseInt(transaction.amount),
-              project: transaction.project_name
-            }));
-    
-            console.log(structuredTransactions);
-    
-            setGovTransactions(structuredTransactions);
-          } else {
-            console.log("Ethereum is not present");
-          }
-        } catch (error) {
-          console.log(error);
-        }
-    };
-  
+  throw new Error("No ethereum object");
+  }
+};
+
+  /////////////////////////////////////////////////////////////////////
+  /////// Central Functions
+  /////////////////////////////////////////////////////////////////////
+
+const getBalance = async () => {
+  try {
+    if (ethereum) {
+      const transactionsContract = createEthereumContract();
+
+      const bal = await transactionsContract.GetBalance();
+      console.log(bal);
+      const num= Number(bal);
+      setBalance(num);
+      console.log(balance);
+    } else {
+      console.log("Ethereum is not present");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getSpend = async () => {
+  try {
+    if (ethereum) {
+      const transactionsContract = createEthereumContract();
+
+      const spe = await transactionsContract.GetSpend();
+      console.log(spe);
+      const num= Number(spe);
+      setSpend(num);
+      console.log(spend);
+
+    } else {
+      console.log("Ethereum is not present");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+  const AddFunds = async () => {
+      try {
+      if (ethereum) {
+          const { amount } = formData4;
+          const pamount= parseInt(amount);
+          const transactionsContract = createEthereumContract();
+          //const parsedAmount = parseInt(amount);
+
+          const transactionHash = await transactionsContract.AddFunds(pamount);
+          // const transactionHash = await transactionsContract.AddFunds(1000);
+          console.log("Funds Added");
+          // setIsLoading(true);
+          console.log(`Loading - ${transactionHash.hash}`);
+          await transactionHash.wait();
+          console.log(`Success - ${transactionHash.hash}`);
+          // setIsLoading(false);
+          const transactionsCount = await transactionsContract.getTransactionCount();
+
+          setTransactionCount(transactionsCount.toNumber());
+          window.location.reload();
+      } else {
+          console.log("No ethereum object");
+      }
+      } catch (error) {
+      console.log(error);
+
+      throw new Error("No ethereum object");
+      }
+};
 
 
   useEffect(() => {
@@ -548,55 +489,48 @@ export const TransactionsProvider = ({ children }) => {
   return (
     <TransactionContext.Provider
       value={{
-        transactionCount,
-        connectWallet,
-        connectCentralWallet,
-        connectGovernmentWallet,
-        transactions,
-        governments,
-        govTransactions,
+        /// Variables
         currentAccount,
-        isLoading,
-        /////////
-        handleChange,
-        handleChange2,
-        handleChange3,
-        handleChange4,
-        /////////
-        formData1,
-        formData4,
-        formData3,
-        formData2,
-        setformData1,
-        setformData2,
-        setformData3,
-        setformData4,
-        //////////
+        transactionCount,
         cLogin,
         govLogin,
-        govDetails,
-        allocFunds,
+        vendorLogin,
+        deptLogin,
+        formData1,
+        handleChange1,
+        formData2,
+        handleChange2,
+        formData3,
+        handleChange3,
+        already,
         balance,
         spend,
-        alreadyGov,
-        //////////
-        getAllTransactions,
+        formData4,
+        handleChange4,
+
+        /// Functions
+        checkIfCentralIsConnect,
         checkIfWalletIsConnect,
         checkIfTransactionsExists,
-        checkIfCentralIsConnect,
+        connectCentralWallet,
+        connectDepartmentWallet,
+        connectGovernmentWallet,
+        connectVendorWallet,
+        connectWallet,
         centralLogin,
         governmentLogin,
-        GovernmentDetails,
+        DepartmentLogin,
+        VendorLogin,
+        CheckRegisterGovernment,
+        RegisterGovernment,
+        CheckRegisterDepartment,
+        RegisterDepartment,
+        CheckRegisterVendor,
+        RegisterVendor,
         getBalance,
         getSpend,
         AddFunds,
-        getAddedFunds,
-        getAllGovernments,
-        CheckRegisterGovernment,
-        RegisterGovernment,
-        AllocateFunds,
-        TransferFunds,
-        getAllGovernmentTrancations
+
       }}
     >
       {children}
