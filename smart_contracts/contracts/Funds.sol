@@ -281,7 +281,6 @@ contract Funds {
         project.state_name=_state_name;
         project.department_name=_dept_name;
         project.department_add=_dept_add;
-
     }
 
     function SendInstallment2(uint _id) public {

@@ -43,12 +43,12 @@ const rows = [
 ];
 
 export default function CustomizedTables() {
-  // const { transactions, getAllTransactions } = useContext(TransactionContext);
+  const { projects, getAllProjects } = useContext(TransactionContext);
 
-  // useEffect(() => {
-  //   console.log("Called");
-  //   getAllTransactions();
-  // }, []);
+  useEffect(() => {
+    console.log("Called");
+    getAllProjects();
+  }, []);
 
 
   return (
@@ -57,25 +57,26 @@ export default function CustomizedTables() {
 
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Time</StyledTableCell>
-            <StyledTableCell align="center">From</StyledTableCell>
-            <StyledTableCell align="center">To</StyledTableCell>
+            {/* <StyledTableCell align="center">Time</StyledTableCell> */}
+            <StyledTableCell align="center">Project Name</StyledTableCell>
             <StyledTableCell align="center">Amount</StyledTableCell>
-            <StyledTableCell align="center">Project</StyledTableCell>
+            <StyledTableCell align="center">State</StyledTableCell>
+            <StyledTableCell align="center">Department</StyledTableCell>
+            <StyledTableCell align="center">Status</StyledTableCell>
           </TableRow>
         </TableHead>
 
-        {/* <TableBody>
-          {transactions.map((transaction) => (
-            <StyledTableRow key={transaction.timestamp}>
-              <StyledTableCell align="center" >{transaction.timestamp} </StyledTableCell>
-              <StyledTableCell align="center">{transaction.fromName}</StyledTableCell>
-              <StyledTableCell align="center">{transaction.toName}</StyledTableCell>
-              <StyledTableCell align="center">{transaction.amount}</StyledTableCell>
-              <StyledTableCell align="center">{transaction.project}</StyledTableCell>
+        <TableBody>
+          {projects.map((project) => (
+            <StyledTableRow key={project.id}>
+              <StyledTableCell align="center" >{project.name} </StyledTableCell>
+              <StyledTableCell align="center">{project.amount}</StyledTableCell>
+              <StyledTableCell align="center">{project.state_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.dept_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.status}</StyledTableCell>
             </StyledTableRow>
           ))}
-        </TableBody> */}
+        </TableBody>
       </Table>
     </TableContainer>
   );

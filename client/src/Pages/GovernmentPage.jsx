@@ -5,17 +5,18 @@ import Navbar from '../components/Navbar'
 import { Grid, Typography } from "@mui/material"
 import Form from '../components/form2'
 import Leftbar from '../components/leftbar2'
+import Rightbar from "../components/rightbar2"
 import Dashboard from '../components/dashboard2'
 import { Divider } from '@mui/material'
 
 
 const Governmentpage = () => {
-    const { GovernmentDetails, govDetails } = useContext(TransactionContext);
+    // const { GovernmentDetails, govDetails } = useContext(TransactionContext);
 
-    useEffect(() => {
-      console.log("Called");
-      GovernmentDetails();
-    }, []);
+    // useEffect(() => {
+    //   console.log("Called");
+    //   GovernmentDetails();
+    // }, []);
 
   return (
     <div>
@@ -29,7 +30,7 @@ const Governmentpage = () => {
         }} >
 
             <Grid item xs={2}> 
-            <Leftbar />
+            {/* <Leftbar /> */}
             </Grid>
 
 
@@ -43,14 +44,14 @@ const Governmentpage = () => {
                 color: '#000',
                 
             }}
-            >{govDetails.name}</Typography>
+            >govDetails.name</Typography>
             <Form />
             <Dashboard />
             </Grid>
 
 
             <Grid  item xs={2} > 
-            {/* <Rightbar /> */}
+            <Rightbar />
             
             </Grid>
 

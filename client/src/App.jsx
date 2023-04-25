@@ -5,6 +5,7 @@ import Transaction from "./Pages/Transaction";
 import Service from "./Pages/Service";
 import Central from "./Pages/Centralpage";
 import Register from "./Pages/RegisterGov";
+import RegisterDept from "./Pages/RegisterDept";
 import AllGovtdetails from "./Pages/AllGovtdetails";
 import Governmentpage from "./Pages/GovernmentPage";
 
@@ -24,6 +25,7 @@ const App = () => (
       <Route path="/transactions" element={<Transaction />} />
       <Route path="/central" element={<Central />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/registerdept" element={<RegisterDept />} />
       <Route path="/allgovtdetails" element={<AllGovtdetails />} />
       <Route path="/government" element={<Governmentpage />} />
     </Routes>

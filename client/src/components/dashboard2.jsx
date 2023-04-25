@@ -33,12 +33,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function CustomizedTables() {
-  // const { govTransactions, getAllGovernmentTrancations } = useContext(TransactionContext);
+  const { projects, getStateProjects } = useContext(TransactionContext);
 
-  // useEffect(() => {
-  //   console.log("Called");
-  //   getAllGovernmentTrancations();
-  // }, []);
+  useEffect(() => {
+    console.log("Called");
+    getStateProjects();
+  }, []);
 
 
   return (
@@ -57,17 +57,17 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
 
-        {/* <TableBody>
-          {govTransactions.map((govTransaction) => (
-            <StyledTableRow key={govTransaction.timestamp}>
-              <StyledTableCell align="center" >{govTransaction.timestamp} </StyledTableCell>
-              <StyledTableCell align="center">{govTransaction.fromName}</StyledTableCell>
-              <StyledTableCell align="center">{govTransaction.toName}</StyledTableCell>
-              <StyledTableCell align="center">{govTransaction.amount}</StyledTableCell>
-              <StyledTableCell align="center">{govTransaction.project}</StyledTableCell>
+        <TableBody>
+          {projects.map((project) => (
+            <StyledTableRow key={project.id}>
+              <StyledTableCell align="center" >{project.name} </StyledTableCell>
+              <StyledTableCell align="center">{project.amount}</StyledTableCell>
+              <StyledTableCell align="center">{project.state_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.dept_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.status}</StyledTableCell>
             </StyledTableRow>
           ))}
-        </TableBody> */}
+        </TableBody>
       </Table>
     </TableContainer>
   );

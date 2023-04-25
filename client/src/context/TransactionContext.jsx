@@ -45,6 +45,12 @@ export const TransactionsProvider = ({ children }) => {
   const handleChange4 = (e, name) => {
     setformData4((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
+  const [projects, setProjects] = useState([]);
+  ///////////////////// State
+  const [formData5, setformData5] = useState({ name:"",amount:0,installments:0,state_name:"",dept_name:""});
+  const handleChange5 = (e, name) => {
+    setformData5((prevState) => ({ ...prevState, [name]: e.target.value }));
+  };
 
   /////////////////////////////////////////////////////////////////////
   /////// Pages Function Calling Functions
@@ -357,7 +363,7 @@ const RegisterDepartment = async () => {
       console.log(`Success - ${transaction.hash}`);
       // setIsLoading(false);
 
-      // window.location.reload();
+      window.location.reload();
   } else {
       console.log("No ethereum object");
   }
@@ -466,9 +472,6 @@ const getSpend = async () => {
           await transactionHash.wait();
           console.log(`Success - ${transactionHash.hash}`);
           // setIsLoading(false);
-          const transactionsCount = await transactionsContract.getTransactionCount();
-
-          setTransactionCount(transactionsCount.toNumber());
           window.location.reload();
       } else {
           console.log("No ethereum object");
@@ -478,7 +481,89 @@ const getSpend = async () => {
 
       throw new Error("No ethereum object");
       }
-};
+  };
+
+  const getAllProjects = async () => {
+    try {
+      if (ethereum) {
+        const transactionsContract = createEthereumContract();
+  
+        const proj = await transactionsContract.getAllProjects();
+        console.log(proj);
+        const structuredProjects = proj.map((project) => ({
+          id: parseInt(project.id),
+          name: project.name,
+          amount: parseInt(project.amount),
+          installments: parseInt(project.installments),
+          status: parseInt(project.status),
+          state_name: project.state_name,
+          dept_name:project.department_name
+        }));
+        setProjects(structuredProjects);
+        //console.log(projects);
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  /////////////////////////////////////////////////////////////////////
+  /////// State Functions
+  /////////////////////////////////////////////////////////////////////
+
+  const StartProject = async () => {
+    try {
+    if (ethereum) {
+        const { name, amount, installments, state_name, dept_name } = formData5;
+        const transactionsContract = createEthereumContract();
+        const transaction = await transactionsContract.StartProject(name,amount,installments,state_name,dept_name);
+
+        console.log(`Loading - ${transaction.hash}`);
+        // await transactionHash.wait();
+        console.log(`Success - ${transaction.hash}`);
+        // setIsLoading(false);
+
+        // window.location.reload();
+    } else {
+        console.log("No ethereum object");
+    }
+    } catch (error) {
+    console.log(error);
+
+    throw new Error("No ethereum object");
+    }
+  };
+
+  const getStateProjects = async () => {
+    try {
+      if (ethereum) {
+        const transactionsContract = createEthereumContract();
+  
+        const proj = await transactionsContract.getStateProjects();
+        console.log(proj);
+        const structuredProjects = proj.map((project) => ({
+          id: parseInt(project.id),
+          name: project.name,
+          amount: parseInt(project.amount),
+          installments: parseInt(project.installments),
+          status: parseInt(project.status),
+          state_name: project.state_name,
+          dept_name:project.department_name
+        }));
+        setProjects(structuredProjects);
+        //console.log(projects);
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
 
   useEffect(() => {
@@ -507,6 +592,9 @@ const getSpend = async () => {
         spend,
         formData4,
         handleChange4,
+        formData5,
+        handleChange5,
+        projects,
 
         /// Functions
         checkIfCentralIsConnect,
@@ -530,6 +618,9 @@ const getSpend = async () => {
         getBalance,
         getSpend,
         AddFunds,
+        StartProject,
+        getAllProjects,
+        getStateProjects,
 
       }}
     >
