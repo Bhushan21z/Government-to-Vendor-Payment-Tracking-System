@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import HeroHome from "../components/HeroHome";
 import FeaturesBlocks from "../components/FeaturesBlocks";
 import Newsletter from "../components/Newsletter";
-
+import Footer from "../components/Footer";
 
 function Homepage() {
   return (
