@@ -13,7 +13,7 @@ function Homepage() {
         <HeroHome />
         <FeaturesBlocks />
       </main>
-      <Footer />
+
     </div>
   );
 }

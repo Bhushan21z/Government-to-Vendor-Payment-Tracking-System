@@ -7,6 +7,7 @@ import Central from "./Pages/Centralpage";
 import Register from "./Pages/RegisterGov";
 import AllGovtdetails from "./Pages/AllGovtdetails";
 import Governmentpage from "./Pages/GovernmentPage";
+import AllProjectDetails from "./Pages/AllProjectDetails";
 
 const App = () => (
   <div className="min-h-screen">
@@ -26,6 +27,8 @@ const App = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/allgovtdetails" element={<AllGovtdetails />} />
       <Route path="/government" element={<Governmentpage />} />
+      <Route path="/allprojdetails" element={<AllProjectDetails />} />
+
     </Routes>
   </div>
 );

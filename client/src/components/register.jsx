@@ -57,7 +57,7 @@ function RegisterForm() {
             
             <Grid item xs={12} sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 columnGap: '1rem',
                 width: '100%',
                 my: '1rem',
@@ -68,7 +68,7 @@ function RegisterForm() {
 
             <Grid item xs={12} sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 columnGap: '1rem',
                 width: '100%',
                   my: '1rem',
@@ -80,13 +80,35 @@ function RegisterForm() {
 
             <Grid item xs={12} sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 columnGap: '1rem',
                 width: '100%',
                   my: '1rem',
             }}>
             <Typography variant="h6" component="h2" gutterBottom> Government Name </Typography>
             <Input placeholder="Name" name="name" type="text"  handleChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={12} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                columnGap: '1rem',
+                width: '100%',
+                  my: '1rem',
+            }}>
+            <Typography variant="h6" component="h2" gutterBottom > Email </Typography>
+            <Input  placeholder="Email" name="govmail" type="email"  handleChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={12} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                columnGap: '1rem',
+                width: '100%',
+                  my: '1rem',
+            }}>
+            <Typography variant="h6" component="h2" gutterBottom > Pin </Typography>
+            <Input placeholder="Security pin" name="govpin" type="number"  handleChange={handleChange} />
             </Grid>
 
         
@@ -107,6 +129,7 @@ function RegisterForm() {
            
             </Grid>
     </div>
+    
   );
 }
 

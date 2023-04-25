@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar'
 import { Grid, Typography } from "@mui/material"
 import Form from '../components/form2'
 import Leftbar from '../components/leftbar2'
+import Rightbar from '../components/rightbargov'
 import Dashboard from '../components/dashboard2'
 import { Divider } from '@mui/material'
 
@@ -50,7 +51,8 @@ const Governmentpage = () => {
 
 
             <Grid  item xs={2} > 
-            {/* <Rightbar /> */}
+            <Rightbar />
+            {/* <rightbargov/> */}
             
             </Grid>
 

@@ -74,7 +74,7 @@ const form2 = () => {
                 width: '100%',
                 my: '1rem',
             }}>
-            <Typography sx={text}> Receiver </Typography>
+            <Typography sx={text}> Receiver Dept </Typography>
             <Input placeholder="Receiver" name="to" type="text"  handleChange={handleChange4} />
             </Grid>
 
@@ -87,6 +87,17 @@ const form2 = () => {
             }}>
             <Typography sx={text}> Project </Typography>
             <Input placeholder=" Project Name" name="project" type="text"  handleChange={handleChange4} />
+            </Grid>
+
+            <Grid item xs={12} sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                columnGap: '1rem',
+                width: '100%',
+                  my: '1rem',
+            }}>
+            <Typography sx={text}> Installments </Typography>
+            <Input placeholder="No. of installments" name="amount" type="number"  handleChange={handleChange4} />
             </Grid>
 
 
@@ -113,7 +124,7 @@ const form2 = () => {
                 backgroundColor: '#c01630',
              }}
             >
-              Send Funds
+              Create Project
             </Button>
           </form>
           
