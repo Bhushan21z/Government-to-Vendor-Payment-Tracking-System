@@ -1,9 +1,8 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import HeroHome from "../components/HeroHome";
-import FeaturesBlocks from "../components/FeaturesBlocks";
-import Newsletter from "../components/Newsletter";
-import Footer from "../components/Footer";
+import HeroHome from "../components/HomePage/HeroHome";
+import FeaturesBlocks from "../components/HomePage/FeaturesBlocks";
+import Footer from "../components/HomePage/Footer";
 
 function Homepage() {
   return (

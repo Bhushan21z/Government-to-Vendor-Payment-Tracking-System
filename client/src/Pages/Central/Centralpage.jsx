@@ -1,10 +1,10 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import { Grid, Typography } from "@mui/material"
-import Form from '../components/form'
-import Leftbar from '../components/leftbar'
-import Rightbar from '../components/rightbar'
-import Dashboard from '../components/dashboard'
+import Form from '../../components/Central/form'
+import Leftbar from '../../components/Central/leftbar'
+import Rightbar from '../../components/Central/rightbar'
+import Dashboard from '../../components/Central/dashboard'
 import { Divider } from '@mui/material'
 import { useContext, useEffect } from "react";
 import { TransactionContext } from "../../context/TransactionContext";

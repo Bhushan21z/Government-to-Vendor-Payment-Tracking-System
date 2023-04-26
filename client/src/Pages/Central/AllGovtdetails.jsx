@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
-import Dashboard from '../components/govDashboard'
+import Dashboard from '../../components/Central/govDashboard'
 import { Grid } from '@mui/material'
 
 

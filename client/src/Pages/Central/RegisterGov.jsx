@@ -1,8 +1,7 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import { Grid } from "@mui/material"
-import RegisterForm from '../components/register'
-import Leftbar from '../components/Leftbar'
+import RegisterForm from '../../components/Central/register'
 
 const Register = () => {
   return (
