@@ -509,6 +509,38 @@ const getSpend = async () => {
     }
   };
 
+  const ApproveProject = async (id) => {
+    try {
+      if (ethereum) {
+        const transactionsContract = createEthereumContract();
+        
+        const app = await transactionsContract.ApproveProjects(id);
+        console.log(app);
+        window.location.reload();
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const SendInstallmentCentral = async (id) => {
+    try {
+      if (ethereum) {
+        const transactionsContract = createEthereumContract();
+        
+        const app = await transactionsContract.SendInstallment1(id);
+        console.log(app);
+        window.location.reload();
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   /////////////////////////////////////////////////////////////////////
   /////// State Functions
@@ -555,6 +587,22 @@ const getSpend = async () => {
         }));
         setProjects(structuredProjects);
         //console.log(projects);
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const SendInstallmentState = async (id) => {
+    try {
+      if (ethereum) {
+        const transactionsContract = createEthereumContract();
+        
+        const app = await transactionsContract.SendInstallment2(id);
+        console.log(app);
+        window.location.reload();
       } else {
         console.log("Ethereum is not present");
       }
@@ -621,6 +669,9 @@ const getSpend = async () => {
         StartProject,
         getAllProjects,
         getStateProjects,
+        ApproveProject,
+        SendInstallmentCentral,
+        SendInstallmentState,
 
       }}
     >

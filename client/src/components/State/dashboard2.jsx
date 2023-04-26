@@ -32,6 +32,33 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
+function TableData(projectprop){
+  const { SendInstallmentState } = useContext(TransactionContext);
+  const project=projectprop.project;
+
+  const handleSubmit2 = async ()=>{
+    console.log(project.id);
+    SendInstallmentState(project.id);
+  }
+
+  return(
+    <>
+            <StyledTableRow key={project.id}>
+              <StyledTableCell align="center" >{project.name} </StyledTableCell>
+              <StyledTableCell align="center">{project.amount}</StyledTableCell>
+              <StyledTableCell align="center">{project.state_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.dept_name}</StyledTableCell>
+              {/* <StyledTableCell align="center">{project.status}</StyledTableCell> */}
+              <StyledTableCell align="center">
+                  {project.status==0 ? <Button>Awaiting Approve</Button>
+                  : project.status==1 ? <Button onClick={handleSubmit2}>Send Installment</Button>
+                  :<Button>Funds Transfered</Button>
+                  }
+              </StyledTableCell>
+            </StyledTableRow>
+    </>
+  )
+}
 
 export default function CustomizedTables() {
   const { projects, getStateProjects } = useContext(TransactionContext);
@@ -50,28 +77,17 @@ export default function CustomizedTables() {
 
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Time</StyledTableCell>
-            <StyledTableCell align="center">From</StyledTableCell>
-            <StyledTableCell align="center">To</StyledTableCell>
+          <StyledTableCell align="center">Project Name</StyledTableCell>
             <StyledTableCell align="center">Amount</StyledTableCell>
-            <StyledTableCell align="center">Project</StyledTableCell>
+            <StyledTableCell align="center">State</StyledTableCell>
+            <StyledTableCell align="center">Department</StyledTableCell>
+            <StyledTableCell align="center">Status</StyledTableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
           {projects.map((project) => (
-            <StyledTableRow key={project.id}>
-              <StyledTableCell align="center" >{project.name} </StyledTableCell>
-              <StyledTableCell align="center">{project.amount}</StyledTableCell>
-              <StyledTableCell align="center">{project.state_name}</StyledTableCell>
-              <StyledTableCell align="center">{project.dept_name}</StyledTableCell>
-              <StyledTableCell align="center">
-                  {project.status==0 ? <Button>Awaiting Approval</Button>
-                  : project.status==1 ? <Button>Send Installment</Button>
-                  :<Button>Funds Transfered</Button>
-                  }
-              </StyledTableCell>
-            </StyledTableRow>
+            <TableData project={project} />
           ))}
         </TableBody>
       </Table>

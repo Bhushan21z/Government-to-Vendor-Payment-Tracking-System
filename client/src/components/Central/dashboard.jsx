@@ -31,10 +31,43 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+function TableData(projectprop){
+  const { ApproveProject, SendInstallmentCentral } = useContext(TransactionContext);
+  const project=projectprop.project;
+
+  const handleSubmit1 = async ()=>{
+    console.log(project.id);
+    ApproveProject(project.id);
+  }
+
+  const handleSubmit2 = async ()=>{
+    console.log(project.id);
+    SendInstallmentCentral(project.id);
+  }
+
+  return(
+    <>
+            <StyledTableRow key={project.id}>
+              <StyledTableCell align="center" >{project.name} </StyledTableCell>
+              <StyledTableCell align="center">{project.amount}</StyledTableCell>
+              <StyledTableCell align="center">{project.state_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.dept_name}</StyledTableCell>
+              {/* <StyledTableCell align="center">{project.status}</StyledTableCell> */}
+              <StyledTableCell align="center">
+                  {project.status==0 ? <Button onClick={handleSubmit1}>Approve</Button>
+                  : project.status==1 ? <Button onClick={handleSubmit2}>Send Installment</Button>
+                  :<Button>Funds Transfered</Button>
+                  }
+              </StyledTableCell>
+            </StyledTableRow>
+    </>
+  )
+}
+
 
 
 export default function CustomizedTables() {
-  const { projects, getAllProjects } = useContext(TransactionContext);
+  const { projects, getAllProjects, ApproveProject } = useContext(TransactionContext);
 
   useEffect(() => {
     console.log("Called");
@@ -59,19 +92,7 @@ export default function CustomizedTables() {
 
         <TableBody>
           {projects.map((project) => (
-            <StyledTableRow key={project.id}>
-              <StyledTableCell align="center" >{project.name} </StyledTableCell>
-              <StyledTableCell align="center">{project.amount}</StyledTableCell>
-              <StyledTableCell align="center">{project.state_name}</StyledTableCell>
-              <StyledTableCell align="center">{project.dept_name}</StyledTableCell>
-              {/* <StyledTableCell align="center">{project.status}</StyledTableCell> */}
-              <StyledTableCell align="center">
-                  {project.status==0 ? <Button>Approve</Button>
-                  : project.status==1 ? <Button>Send Installment</Button>
-                  :<Button>Funds Transfered</Button>
-                  }
-              </StyledTableCell>
-            </StyledTableRow>
+            <TableData project={project} />
           ))}
         </TableBody>
       </Table>
