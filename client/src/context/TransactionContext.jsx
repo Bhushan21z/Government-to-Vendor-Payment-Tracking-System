@@ -51,6 +51,12 @@ export const TransactionsProvider = ({ children }) => {
   const handleChange5 = (e, name) => {
     setformData5((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
+  ///////////////////// Department
+  const [formData6, setformData6] = useState({ name:"",dept_name:"",amount:0});
+  const handleChange6 = (e, name) => {
+    setformData6((prevState) => ({ ...prevState, [name]: e.target.value }));
+  };
+  const [contracts, setContracts] = useState([]);
 
   /////////////////////////////////////////////////////////////////////
   /////// Pages Function Calling Functions
@@ -558,7 +564,7 @@ const getSpend = async () => {
         console.log(`Success - ${transaction.hash}`);
         // setIsLoading(false);
 
-        // window.location.reload();
+        window.location.reload();
     } else {
         console.log("No ethereum object");
     }
@@ -612,6 +618,57 @@ const getSpend = async () => {
   };
 
 
+  /////////////////////////////////////////////////////////////////////
+  /////// Department Functions
+  /////////////////////////////////////////////////////////////////////
+
+  const OpenContracts = async () => {
+    try {
+    if (ethereum) {
+        const { name,dept_name, amount } = formData6;
+        const transactionsContract = createEthereumContract();
+        const transaction = await transactionsContract.OpenContract(name,dept_name,amount);
+
+        console.log(`Loading - ${transaction.hash}`);
+        // await transactionHash.wait();
+        console.log(`Success - ${transaction.hash}`);
+        // setIsLoading(false);
+
+        window.location.reload();
+    } else {
+        console.log("No ethereum object");
+    }
+    } catch (error) {
+    console.log(error);
+
+    throw new Error("No ethereum object");
+    }
+  };
+
+  const getContracts = async () => {
+    try {
+      if (ethereum) {
+        const transactionsContract = createEthereumContract();
+  
+        const contracts = await transactionsContract.getContracts();
+        console.log(contracts);
+        const structuredContracts = contracts.map((contract) => ({
+          name: contract.name,
+          dept_name: contract.dept_name,
+          dept_add: contract.dept_add,
+          status: parseInt(contract.status),
+          amount: parseInt(contract.amount)
+        }));
+        setContracts(structuredContracts);
+        //console.log(projects);
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
 
   useEffect(() => {
@@ -643,6 +700,9 @@ const getSpend = async () => {
         formData5,
         handleChange5,
         projects,
+        formData6,
+        handleChange6,
+        contracts,
 
         /// Functions
         checkIfCentralIsConnect,
@@ -672,6 +732,8 @@ const getSpend = async () => {
         ApproveProject,
         SendInstallmentCentral,
         SendInstallmentState,
+        OpenContracts,
+        getContracts,
 
       }}
     >

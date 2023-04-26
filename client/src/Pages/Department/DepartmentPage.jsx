@@ -3,10 +3,10 @@ import { useContext, useEffect } from "react";
 import { TransactionContext } from "../../context/TransactionContext";
 import Navbar from '../../components/Navbar'
 import { Grid, Typography } from "@mui/material"
-import Form from '../../components/Department/form3'
-import Leftbar from '../../components/Department/leftbar3'
-import Rightbar from "../../components/Department/rightbar3"
-import Dashboard from '../../components/Department/dashboard3';
+import Form from '../../components/Department/form4'
+import Leftbar from '../../components/Department/leftbar4'
+import Rightbar from "../../components/Department/rightbar4"
+import Dashboard from '../../components/Department/dashboard4';
 import { Divider } from '@mui/material'
 
 

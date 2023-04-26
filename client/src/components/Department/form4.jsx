@@ -25,12 +25,12 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 const text = { padding: 2, margin: "3px 0" , width: "200px" };
 const form2 = () => {
-  const { formData5, handleChange5, StartProject } = useContext(TransactionContext);
+  const { formData6, handleChange6, OpenContracts } = useContext(TransactionContext);
 
   const handleSubmit = async (e) => {
-    console.log(formData5);
+    console.log(formData6);
     e.preventDefault();
-    StartProject();
+    OpenContracts();
   };
 
   return (
@@ -54,7 +54,7 @@ const form2 = () => {
                 color: '#000',
                 
             }}>
-          Start Project   
+          Open Contract  
         </Typography>
             </Grid>
 
@@ -73,41 +73,8 @@ const form2 = () => {
                 width: '100%',
                 my: '1rem',
             }}>
-            <Typography sx={text}> Project Name </Typography>
-            <Input placeholder="Project Name" name="name" type="text"  handleChange={handleChange5} />
-            </Grid>
-
-            <Grid item xs={12} sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                columnGap: '1rem',
-                width: '100%',
-                  my: '1rem',
-            }}>
-            <Typography sx={text}> Project Amount </Typography>
-            <Input placeholder=" Project Amount" name="amount" type="number"  handleChange={handleChange5} />
-            </Grid>
-
-            <Grid item xs={12} sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                columnGap: '1rem',
-                width: '100%',
-                  my: '1rem',
-            }}>
-            <Typography sx={text}> Project Installments </Typography>
-            <Input placeholder="Project Installments" name="installments" type="number"  handleChange={handleChange5} />
-            </Grid>
-
-            <Grid item xs={12} sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                columnGap: '1rem',
-                width: '100%',
-                  my: '1rem',
-            }}>
-            <Typography sx={text}> State Name </Typography>
-            <Input placeholder="State Name" name="state_name" type="text"  handleChange={handleChange5} />
+            <Typography sx={text}> Contract Name </Typography>
+            <Input placeholder="Project Name" name="name" type="text"  handleChange={handleChange6} />
             </Grid>
 
             <Grid item xs={12} sx={{
@@ -118,10 +85,19 @@ const form2 = () => {
                   my: '1rem',
             }}>
             <Typography sx={text}> Department Name </Typography>
-            <Input placeholder="Department Name" name="dept_name" type="text"  handleChange={handleChange5} />
+            <Input placeholder="Department Name" name="dept_name" type="text"  handleChange={handleChange6} />
             </Grid>
 
-        
+            <Grid item xs={12} sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                columnGap: '1rem',
+                width: '100%',
+                  my: '1rem',
+            }}>
+            <Typography sx={text}> Contract Amount </Typography>
+            <Input placeholder=" Project Amount" name="amount" type="number"  handleChange={handleChange6} />
+            </Grid>
 
             <Button
               type="submit"
