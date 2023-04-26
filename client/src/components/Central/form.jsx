@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '@mui/material/Button';
 import {TextField,Typography,Grid} from '@mui/material';
 import { useContext } from "react";
-import { TransactionContext } from "../context/TransactionContext";
+import { TransactionContext } from "../../context/TransactionContext";
 
 const Input = ({ placeholder, name, type, value, handleChange }) => (
   <input
@@ -24,13 +24,13 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 
 const text = { padding: 2, margin: "3px 0" , width: "200px" };
-const form2 = () => {
-  const { formData5, handleChange5, StartProject } = useContext(TransactionContext);
+const form = () => {
+  // const { formData3, handleChange3, AllocateFunds } = useContext(TransactionContext);
 
   const handleSubmit = async (e) => {
-    console.log(formData5);
-    e.preventDefault();
-    StartProject();
+    // console.log(formData3);
+    // e.preventDefault();
+    // AllocateFunds();
   };
 
   return (
@@ -43,7 +43,9 @@ const form2 = () => {
             justifyContent: 'center',
             border: '1px solid #ccc',
             borderRadius: '1rem',
-            p: '3rem',   
+            p: '3rem',
+            my:5
+           
         }}>
             <Grid item xs={12} sm={6}>
             <Typography sx={{
@@ -54,7 +56,7 @@ const form2 = () => {
                 color: '#000',
                 
             }}>
-          Start Project   
+          Sanctioned Funds   
         </Typography>
             </Grid>
 
@@ -64,7 +66,7 @@ const form2 = () => {
                 rowGap: '2rem',
                width: '100%',
             }}>
-          <form onSubmit={handleSubmit} >
+          {/* <form onSubmit={handleSubmit} >
             
             <Grid item xs={12} sx={{
                 display: 'flex',
@@ -73,8 +75,8 @@ const form2 = () => {
                 width: '100%',
                 my: '1rem',
             }}>
-            <Typography sx={text}> Project Name </Typography>
-            <Input placeholder="Project Name" name="name" type="text"  handleChange={handleChange5} />
+            <Typography sx={text}> Receiver </Typography>
+            <Input placeholder="Receiver" name="to" type="text"  handleChange={handleChange3} />
             </Grid>
 
             <Grid item xs={12} sx={{
@@ -84,9 +86,10 @@ const form2 = () => {
                 width: '100%',
                   my: '1rem',
             }}>
-            <Typography sx={text}> Project Amount </Typography>
-            <Input placeholder=" Project Amount" name="amount" type="number"  handleChange={handleChange5} />
+            <Typography sx={text}> Project </Typography>
+            <Input placeholder=" Project Name" name="project" type="text"  handleChange={handleChange3} />
             </Grid>
+
 
             <Grid item xs={12} sx={{
                 display: 'flex',
@@ -95,30 +98,8 @@ const form2 = () => {
                 width: '100%',
                   my: '1rem',
             }}>
-            <Typography sx={text}> Project Installments </Typography>
-            <Input placeholder="Project Installments" name="installments" type="number"  handleChange={handleChange5} />
-            </Grid>
-
-            <Grid item xs={12} sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                columnGap: '1rem',
-                width: '100%',
-                  my: '1rem',
-            }}>
-            <Typography sx={text}> State Name </Typography>
-            <Input placeholder="State Name" name="state_name" type="text"  handleChange={handleChange5} />
-            </Grid>
-
-            <Grid item xs={12} sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                columnGap: '1rem',
-                width: '100%',
-                  my: '1rem',
-            }}>
-            <Typography sx={text}> Department Name </Typography>
-            <Input placeholder="Department Name" name="dept_name" type="text"  handleChange={handleChange5} />
+            <Typography sx={text}> Amount </Typography>
+            <Input placeholder="Amount" name="amount" type="number"  handleChange={handleChange3} />
             </Grid>
 
         
@@ -133,9 +114,9 @@ const form2 = () => {
                 backgroundColor: '#c01630',
              }}
             >
-              Submit
+              Send Funds
             </Button>
-          </form>
+          </form> */}
           
             </Grid>
 
@@ -146,4 +127,4 @@ const form2 = () => {
   )
 }
 
-export default form2;
+export default form;

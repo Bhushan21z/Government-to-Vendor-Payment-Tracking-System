@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect } from "react";
-import { TransactionContext } from "../context/TransactionContext";
+import { TransactionContext } from "../../context/TransactionContext";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -31,40 +31,43 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function CustomizedTables() {
-  // const { governments, getAllGovernments } = useContext(TransactionContext);
 
-  // useEffect(() => {
-  //   console.log("Called");
-  //   getAllGovernments();
-  // }, []);
+export default function CustomizedTables() {
+  const { projects, getStateProjects } = useContext(TransactionContext);
+
+  useEffect(() => {
+    console.log("Called");
+    getStateProjects();
+  }, []);
 
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{
+      mt : 7,
+    }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
 
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Government Type</StyledTableCell>
-            <StyledTableCell align="center">Government Name</StyledTableCell>
-            <StyledTableCell align="center">Balance</StyledTableCell>
-            <StyledTableCell align="center">Spend</StyledTableCell>
-            <StyledTableCell align="center">Transactions</StyledTableCell>
+            <StyledTableCell align="center">Time</StyledTableCell>
+            <StyledTableCell align="center">From</StyledTableCell>
+            <StyledTableCell align="center">To</StyledTableCell>
+            <StyledTableCell align="center">Amount</StyledTableCell>
+            <StyledTableCell align="center">Project</StyledTableCell>
           </TableRow>
         </TableHead>
 
-        {/* <TableBody>
-          {governments.map((government) => (
-            <StyledTableRow key={government.name}>
-              <StyledTableCell align="center" >{government.gov_type} </StyledTableCell>
-              <StyledTableCell align="center">{government.name}</StyledTableCell>
-              <StyledTableCell align="center">{government.balance}</StyledTableCell>
-              <StyledTableCell align="center">{government.spend}</StyledTableCell>
-              <StyledTableCell align="center">View all</StyledTableCell>
+        <TableBody>
+          {projects.map((project) => (
+            <StyledTableRow key={project.id}>
+              <StyledTableCell align="center" >{project.name} </StyledTableCell>
+              <StyledTableCell align="center">{project.amount}</StyledTableCell>
+              <StyledTableCell align="center">{project.state_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.dept_name}</StyledTableCell>
+              <StyledTableCell align="center">{project.status}</StyledTableCell>
             </StyledTableRow>
           ))}
-        </TableBody> */}
+        </TableBody>
       </Table>
     </TableContainer>
   );

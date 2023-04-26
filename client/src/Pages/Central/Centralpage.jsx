@@ -1,22 +1,15 @@
 import React from 'react'
-import { useContext, useEffect } from "react";
-import { TransactionContext } from "../context/TransactionContext";
-import Navbar from '../components/Navbar'
+import Navbar from '../../components/Navbar'
 import { Grid, Typography } from "@mui/material"
-import Form from '../components/form2'
-import Leftbar from '../components/leftbar2'
-import Rightbar from "../components/rightbar2"
-import Dashboard from '../components/dashboard2'
+import Form from '../components/form'
+import Leftbar from '../components/leftbar'
+import Rightbar from '../components/rightbar'
+import Dashboard from '../components/dashboard'
 import { Divider } from '@mui/material'
+import { useContext, useEffect } from "react";
+import { TransactionContext } from "../../context/TransactionContext";
 
-
-const Governmentpage = () => {
-    // const { GovernmentDetails, govDetails } = useContext(TransactionContext);
-
-    // useEffect(() => {
-    //   console.log("Called");
-    //   GovernmentDetails();
-    // }, []);
+const Centralpage = () => {
 
   return (
     <div>
@@ -30,8 +23,9 @@ const Governmentpage = () => {
         }} >
 
             <Grid item xs={2}> 
-            {/* <Leftbar /> */}
+            <Leftbar />
             </Grid>
+
 
 
             <Grid item xs={8}   > 
@@ -44,7 +38,7 @@ const Governmentpage = () => {
                 color: '#000',
                 
             }}
-            >govDetails.name</Typography>
+            >Central</Typography>
             <Form />
             <Dashboard />
             </Grid>
@@ -62,4 +56,4 @@ const Governmentpage = () => {
   )
 }
 
-export default Governmentpage;
+export default Centralpage

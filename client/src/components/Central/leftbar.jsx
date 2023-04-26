@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext, useEffect } from "react";
-import { TransactionContext } from "../context/TransactionContext";
+import { TransactionContext } from "../../context/TransactionContext";
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography } from "@mui/material";
 import Lottie from "react-lottie";
-import * as animationData from "../Assets/pay.json";
+import * as animationData from "../../Assets/pay.json";
 
 function HeroHome() {
   const defaultOptions = {
