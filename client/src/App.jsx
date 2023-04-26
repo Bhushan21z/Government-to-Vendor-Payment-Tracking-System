@@ -8,6 +8,7 @@ import Register from "./Pages/Central/RegisterGov";
 import RegisterDept from "./Pages/State/RegisterDept";
 import AllGovtdetails from "./Pages/Central/AllGovtdetails";
 import Governmentpage from "./Pages/State/GovernmentPage";
+import Departmentpage from "./Pages/Department/DepartmentPage";
 
 const App = () => (
   <div className="min-h-screen">
@@ -28,6 +29,7 @@ const App = () => (
       <Route path="/registerdept" element={<RegisterDept />} />
       <Route path="/allgovtdetails" element={<AllGovtdetails />} />
       <Route path="/government" element={<Governmentpage />} />
+      <Route path="/department" element={<Departmentpage />} />
     </Routes>
   </div>
 );

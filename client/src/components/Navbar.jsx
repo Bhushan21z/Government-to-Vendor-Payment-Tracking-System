@@ -44,7 +44,7 @@ function Navbar(props) {
     if (log == true) {
       navigate("/government");
     } else {
-      console.log("NO Central Account");
+      console.log("NO Government Account");
     }
   };
 
@@ -52,9 +52,9 @@ function Navbar(props) {
     const log = await connectDepartmentWallet();
     console.log(log);
     if (log == true) {
-      navigate("/government");
+      navigate("/department");
     } else {
-      console.log("NO Central Account");
+      console.log("NO Department Account");
     }
   };
 
@@ -64,7 +64,7 @@ function Navbar(props) {
     if (log == true) {
       navigate("/government");
     } else {
-      console.log("NO Central Account");
+      console.log("NO Vendor Account");
     }
   };
 
