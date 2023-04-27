@@ -52,6 +52,15 @@ export const TransactionsProvider = ({ children }) => {
     setformData5((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
+  // Department
+  const [formData6, setformData6] = useState({ name:"",amount:0,details:""});
+  const handleChange6 = (e, name) => {
+    setformData6((prevState) => ({ ...prevState, [name]: e.target.value }));
+  };
+
+  const [contracts,setContracts]=useState([])
+  
+
   /////////////////////////////////////////////////////////////////////
   /////// Pages Function Calling Functions
   /////////////////////////////////////////////////////////////////////
@@ -568,7 +577,7 @@ const getSpend = async () => {
     throw new Error("No ethereum object");
     }
   };
-
+ 
   const getStateProjects = async () => {
     try {
       if (ethereum) {
@@ -612,6 +621,54 @@ const getSpend = async () => {
   };
 
 
+// department function
+
+const openContract=async()=>{
+  try {
+    if(ethereum){
+      const { name, amount, details } = formData6;
+      const transactionsContract = createEthereumContract();
+      const transaction = await transactionsContract.openContract(name,amount,details);
+
+      console.log(`Loading - ${transaction.hash}`);
+      // await transactionHash.wait();
+      console.log(`Success - ${transaction.hash}`);
+      // setIsLoading(false);
+
+      // window.location.reload();
+  } else {
+      console.log("No ethereum object");
+  }
+  } catch (error) {
+  console.log(error);
+
+  throw new Error("No ethereum object");
+  }
+};
+
+const getopenContracts = async () => {
+  try {
+    if (ethereum) {
+      const transactionsContract = createEthereumContract();
+
+      const contracts = await transactionsContract.getopenContracts();
+      // console.log(proj);
+      const structuredContracts = contracts.map((contract) => ({
+        name: contract.name,
+        amount: parseInt(contract.amount),
+        details: contract.details
+      }));
+      setContracts(structuredContracts);
+      //console.log(projects);
+    } else {
+      console.log("Ethereum is not present");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 
 
   useEffect(() => {
@@ -643,6 +700,9 @@ const getSpend = async () => {
         formData5,
         handleChange5,
         projects,
+        formData6,
+        handleChange6,
+        contracts,
 
         /// Functions
         checkIfCentralIsConnect,
@@ -672,6 +732,9 @@ const getSpend = async () => {
         ApproveProject,
         SendInstallmentCentral,
         SendInstallmentState,
+        getopenContracts,
+        openContract
+      
 
       }}
     >
