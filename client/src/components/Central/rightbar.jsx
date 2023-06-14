@@ -27,6 +27,9 @@ const rightbar = () => {
         <Link to="/allgovtdetails" style={{ textDecoration: 'none' }}>
             <Button variant="contained"  sx={btn}>Get All Government</Button>
         </Link>
+        <Link to="/centraltrack" style={{ textDecoration: 'none' }}>
+            <Button variant="contained"  sx={btn}>Track All Projects</Button>
+        </Link>
         </Grid>
     </div>
   )

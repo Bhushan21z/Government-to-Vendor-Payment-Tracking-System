@@ -65,6 +65,17 @@ const form2 = () => {
                width: '100%',
             }}>
           <form onSubmit={handleSubmit} >
+
+          <Grid item xs={12} sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                columnGap: '1rem',
+                width: '100%',
+                my: '1rem',
+            }}>
+            <Typography sx={text}> Project Name </Typography>
+            <Input placeholder="Project Name" name="pname" type="text"  handleChange={handleChange6} />
+            </Grid>
             
             <Grid item xs={12} sx={{
                 display: 'flex',
@@ -74,7 +85,7 @@ const form2 = () => {
                 my: '1rem',
             }}>
             <Typography sx={text}> Contract Name </Typography>
-            <Input placeholder="Project Name" name="name" type="text"  handleChange={handleChange6} />
+            <Input placeholder="Contract Name" name="cname" type="text"  handleChange={handleChange6} />
             </Grid>
 
             <Grid item xs={12} sx={{

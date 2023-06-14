@@ -44,14 +44,14 @@ const Governmentpage = () => {
                 color: '#000',
                 
             }}
-            >Department Name</Typography>
+            >Maharashtra Road Department</Typography>
             <Form />
             <Dashboard />
             </Grid>
 
 
             <Grid  item xs={2} > 
-            <Rightbar />
+            {/* <Rightbar /> */}
             
             </Grid>
 

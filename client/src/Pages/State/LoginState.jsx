@@ -1,9 +1,9 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import { Grid } from "@mui/material"
-import RegisterForm from '../../components/Central/register';
+import LoginForm from '../../components/State/login';
 
-const Register = () => {
+const Login = () => {
   return (
     <div>
        
@@ -22,7 +22,7 @@ const Register = () => {
             <Grid item xs={8}  sx={{
               
             }}> 
-           <RegisterForm />
+           <LoginForm />
             </Grid>
             <Grid item xs={2}  sx={{
             }}> 
@@ -33,4 +33,4 @@ const Register = () => {
   )
 }
 
-export default Register;
+export default Login;

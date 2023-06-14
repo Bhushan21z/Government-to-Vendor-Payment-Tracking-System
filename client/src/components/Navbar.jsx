@@ -59,13 +59,14 @@ function Navbar(props) {
   };
 
   const login4 = async () => {
-    const log = await connectVendorWallet();
-    console.log(log);
-    if (log == true) {
-      navigate("/government");
-    } else {
-      console.log("NO Vendor Account");
-    }
+    // const log = await connectVendorWallet();
+    // console.log(log);
+    // if (log == true) {
+    //   navigate("/government");
+    // } else {
+    //   console.log("NO Vendor Account");
+    // }
+    navigate("/registervendor");
   };
 
   return (
@@ -102,8 +103,11 @@ function Navbar(props) {
             <Button onClick={login1} sx={styles.btn}>
               Central
             </Button>
-            <Button onClick={login2} sx={styles.btn}>
+            {/* <Button href="/statelogin" sx={styles.btn}>
               Government
+            </Button> */}
+            <Button onClick={login2} sx={styles.btn}>
+              State
             </Button>
             <Button onClick={login3} sx={styles.btn}>
               Department

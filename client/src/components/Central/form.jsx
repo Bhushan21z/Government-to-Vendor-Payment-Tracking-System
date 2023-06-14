@@ -56,7 +56,7 @@ const form = () => {
                 color: '#000',
                 
             }}>
-          Sanctioned Funds   
+          Project Details 
         </Typography>
             </Grid>
 
@@ -66,6 +66,7 @@ const form = () => {
                 rowGap: '2rem',
                width: '100%',
             }}>
+            {/* <Button variant="contained"  sx={btn} href='/track'>Track Projects</Button> */}
           {/* <form onSubmit={handleSubmit} >
             
             <Grid item xs={12} sx={{

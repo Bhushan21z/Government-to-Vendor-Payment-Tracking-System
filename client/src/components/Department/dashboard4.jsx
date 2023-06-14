@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { TransactionContext } from "../../context/TransactionContext";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -33,13 +34,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 function TableData(contractprop){
-  // const { SendInstallmentState } = useContext(TransactionContext);
+  const navigate= useNavigate();
+  const { SendToVendor } = useContext(TransactionContext);
   const contract=contractprop.contract;
 
-  // const handleSubmit2 = async ()=>{
-  //   console.log(project.id);
-  //   SendInstallmentState(project.id);
-  // }
+  const handleSubmit2 = async ()=>{
+    navigate("/approvevendor", {
+      state: {
+          contract: contract
+      },
+  });
+    // console.log(0,contract.amount,"Books",contract.name);
+    // SendToVendor(0,contract.amount,"Vendor1",contract.name);
+  }
 
   return(
     <>
@@ -47,13 +54,12 @@ function TableData(contractprop){
               <StyledTableCell align="center" >{contract.name} </StyledTableCell>
               <StyledTableCell align="center">{contract.amount}</StyledTableCell>
               <StyledTableCell align="center">{contract.dept_name}</StyledTableCell>
-              <StyledTableCell align="center">{contract.status}</StyledTableCell>
-              {/* <StyledTableCell align="center">
-                  {project.status==0 ? <Button>Awaiting Approve</Button>
-                  : project.status==1 ? <Button onClick={handleSubmit2}>Send Installment</Button>
-                  :<Button>Funds Transfered</Button>
+              {/* <StyledTableCell align="center">{contract.status}</StyledTableCell> */}
+              <StyledTableCell align="center">
+                  {contract.status==0 ? <Button onClick={handleSubmit2}>Approve Vendor</Button>
+                  :<Button>Completed</Button>
                   }
-              </StyledTableCell> */}
+              </StyledTableCell>
             </StyledTableRow>
     </>
   )

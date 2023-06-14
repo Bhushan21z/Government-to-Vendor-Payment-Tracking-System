@@ -1,17 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
-
 pragma solidity ^0.8.0;
-
-// import "hardhat/console.sol";
-
 contract Funds {
 
     ////// Contract Structure
-
     address public central;
     uint public balance;
-    uint public spend;
     uint projectCount;
+    uint contractCount;
 
     struct Installment{
         uint project_id;
@@ -36,6 +31,8 @@ contract Funds {
     }
 
     struct Contract {
+        uint contract_id;
+        uint project_id;
         string name;
         address dept_add;
         string dept_name;
@@ -64,7 +61,6 @@ contract Funds {
         address add;
         string name;
         uint balance;
-        uint spend;
         uint[] projects;
     }
 
@@ -74,7 +70,6 @@ contract Funds {
         address add;
         string name;
         uint balance;
-        uint spend;
         uint[] projects;
     }
 
@@ -97,8 +92,8 @@ contract Funds {
     constructor() {
         central = msg.sender;
         balance=0;
-        spend=0;
         projectCount=0;
+        contractCount=0;
     }
  
     function GovernmentCheck(string memory _name) public view returns (bool) {
@@ -119,7 +114,6 @@ contract Funds {
         temp.add=_add;
         temp.name=_name;
         temp.balance=0;
-        temp.spend=0;
         gov.push(temp);
     }
 
@@ -143,7 +137,6 @@ contract Funds {
         temp.add=_add;
         temp.name=_name;
         temp.balance=0;
-        temp.spend=0;
         dept.push(temp);
     }
     
@@ -209,9 +202,9 @@ contract Funds {
         return balance;
     }
 
-    function GetSpend() public view returns (uint) {
-        return spend;
-    }
+    // function GetSpend() public view returns (uint) {
+    //     return spend;
+    // }
 
     function getProjectCount() public view returns (uint) {
         return projectCount;
@@ -249,6 +242,11 @@ contract Funds {
 
     // 4) State Functions
 
+    // function getAllGovernment() public view returns (Government[] memory) {
+    //     return gov;
+    // }
+
+
     function StartProject(string memory _name,uint _amount,uint _installments,string memory _state_name, string memory _dept_name) public {
         address _state_add;
         address _dept_add;
@@ -281,6 +279,7 @@ contract Funds {
         project.state_name=_state_name;
         project.department_name=_dept_name;
         project.department_add=_dept_add;
+
     }
 
     function SendInstallment2(uint _id) public {
@@ -319,8 +318,16 @@ contract Funds {
 
     // 5) Department Functions
 
-    function OpenContract(string memory _name,string memory _dept_name,uint _amount) public {
-        cont.push(Contract(_name,msg.sender,_dept_name,0,_amount));
+    function OpenContract(string memory _project_name,string memory _name,string memory _dept_name,uint _amount) public {
+        uint n=projectCount;
+        uint _project_id;
+        for(uint i=0;i<n;i++){
+            if(keccak256(abi.encodePacked(projects[i].name)) == keccak256(abi.encodePacked(_project_name))){
+                _project_id=projects[i].id;
+            }
+        }
+        cont.push(Contract(contractCount,_project_id,_name,msg.sender,_dept_name,0,_amount));
+        contractCount=contractCount+1;
     }
 
     function getContracts() public view returns (Contract[] memory) {
@@ -342,10 +349,11 @@ contract Funds {
         return allContracts;
     }
 
-    function SendToVendor(uint _id,uint _amount,string memory _vendor_name, string memory _contract_name) public {
+    function SendToVendor(uint _id,uint _amount,string memory _vendor_name, string memory _contract_name) public {                                                                                        
         uint n=dept.length;
         uint bal=0;
         uint it;
+
         for(uint i=0;i<n;i++){
             if(dept[i].add == projects[_id].department_add){
                 bal=dept[i].balance;
@@ -356,6 +364,8 @@ contract Funds {
         if(bal>=_amount){
             dept[it].balance=dept[it].balance-_amount;
             uint m=vend.length;
+            uint proj_id=cont[_id].project_id;
+            cont[_id].status=1;
             address _vendor_add;
             for(uint i=0;i<m;i++){
                 if(keccak256(abi.encodePacked(vend[i].name)) == keccak256(abi.encodePacked(_vendor_name))){
@@ -363,7 +373,7 @@ contract Funds {
                     break;
                 }
             }
-            projects[_id].vendor.push(VendorPaid(_id,_contract_name,_vendor_add,_vendor_name,_amount,block.timestamp,projects[_id].department_add,projects[_id].department_name));
+            projects[proj_id].vendor.push(VendorPaid(proj_id,_contract_name,_vendor_add,_vendor_name,_amount,block.timestamp,projects[proj_id].department_add,projects[proj_id].department_name));
         }
     }
 

@@ -1,0 +1,148 @@
+/* *{
+  background-color: #fbfbfb;
+} */
+
+.registration-form {
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 420px;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+.heading {
+  background-color: #fff;
+  margin: 0 auto;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.form-field {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+label {
+  background-color: #fff;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+input,
+textarea {
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #d3d3d3;
+  font-size: 16px;
+  width: 300px;
+  max-width: 100%;
+  margin-bottom: 8px;
+}
+
+/* button {
+  width: 320px;
+  max-width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0062cc;
+} */
+
+.alreadysignin{
+  background-color: #fff;
+  color: #808080;
+  width: 100%;
+  text-align: right;
+  font-size: 14px;
+}
+
+.alreadysignin a {
+  background-color: #fff;
+}
+
+.form-field p{
+  margin-top: 0px;
+  font-size: 12px;
+  color: #808080;
+}
+
+.main_table{
+  width: 85%;
+  border-radius: 15px;
+  padding: 50px;
+  position: relative;
+  top: 50px;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main_table p{
+  color: #808080;
+  font-size: 14px;
+}
+
+.searchinput{
+  margin-top: 20px;
+  height: 25px;
+}
+
+.table_header{
+  display: flex;
+  justify-content:space-between;
+}
+
+.table {
+  margin-top: 50px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content h2{
+  text-align: center;
+}

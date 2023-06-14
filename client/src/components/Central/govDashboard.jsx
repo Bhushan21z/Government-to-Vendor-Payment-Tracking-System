@@ -1,71 +1,147 @@
-import * as React from 'react';
-import { useContext, useEffect } from "react";
-import { TransactionContext } from "../../context/TransactionContext";
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React, { useEffect, useState } from 'react';
+import './RegistrationForm.css';
+// import { faTrash } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#2a3750",
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+function GovDetailsPopup({ i, onClose }) {
+    return (
+      <div className="popup">
+        <div className="popup-content">
+          <h2>Government Details</h2>
+          <p>ID: {i.metamask}</p>
+          <p>Name: {i.fname}</p>
+          <p>Email: {i.email}</p>
+          <p>UPI pin: {i.upipin}</p>
+          <p>Password: {i.password}</p>
+          <button onClick={onClose}>Close</button>
+        </div>
+      </div>
+    );
+  }
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
+const GovTable = () => {
+    const [data, setData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
+    useEffect(() =>{
+        getAllGov();
+    }, []);
 
-export default function CustomizedTables() {
-  // const { governments, getAllGovernments } = useContext(TransactionContext);
+    const getAllGov = () => {
+        fetch("https://kind-pink-hermit-crab-toga.cyclic.app/get-gov/getAllGov", {
+            method: "GET",
+        }).then((res) => res.json())
+        .then((data) => {
+            console.log(data, "governmentData");
+            setData(data.data);
+        });
+    }
 
-  // useEffect(() => {
-  //   console.log("Called");
-  //   getAllGovernments();
-  // }, []);
+    // const deleteGov = (id, fname) => {
+    //     if(window.confirm(`Are you sure you want to delete ${fname}`)){
+    //         fetch(`http://localhost:8000/del-gov/deleteGov/${id}`, {
+    //             method: "POST",
+    //             crossDomain: true,
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Accept: "application/json",
+    //                 "Access-Control-Allow-Origin": "*",
+    //             },
+    //             body: JSON.stringify({
+    //                 govid: id,
+    //             }),
+    //         }).then((res) => res.json())
+    //         .then((data) => {
+    //             alert(data.data);
+    //         });
+    //     }
+    //     else{
+    //     }
+    // }
 
+    const deleteGov = (id, fname) => {
+        if(window.confirm(`Are you sure you want to delete ${fname}`)){
+            fetch(`https://kind-pink-hermit-crab-toga.cyclic.app/del-gov/deleteGov/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    govid: id,
+                }),
+            }).then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                alert(data.data);
+                getAllGov();
+            }).catch((error) => {
+                console.error(error);
+                alert("Error deleting record");
+            });
+        }
+    }
+
+    const handleSearchChange = (event) => {
+        const searchQuery = event.target.value;
+        setSearchQuery(searchQuery);
+    }
+
+    const filteredData = data.filter((i) => {
+        const query = searchQuery.toLowerCase();
+        return (
+            i.metamask.toLowerCase().includes(query) ||
+            i.fname.toLowerCase().includes(query) ||
+            i.email.toLowerCase().includes(query)
+        );
+    });
+
+    const [selectedGov, setSelectedGov] = useState(null);
+    
+    const handleRowClick = (i) => {
+        setSelectedGov(i);
+    }
+    
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="center">Government Type</StyledTableCell>
-            <StyledTableCell align="center">Government Name</StyledTableCell>
-            <StyledTableCell align="center">Balance</StyledTableCell>
-            <StyledTableCell align="center">Spend</StyledTableCell>
-            <StyledTableCell align="center">Transactions</StyledTableCell>
-          </TableRow>
-        </TableHead>
-
-        {/* <TableBody>
-          {governments.map((government) => (
-            <StyledTableRow key={government.name}>
-              <StyledTableCell align="center" >{government.gov_type} </StyledTableCell>
-              <StyledTableCell align="center">{government.name}</StyledTableCell>
-              <StyledTableCell align="center">{government.balance}</StyledTableCell>
-              <StyledTableCell align="center">{government.spend}</StyledTableCell>
-              <StyledTableCell align="center">View all</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody> */}
-      </Table>
-    </TableContainer>
+    <div className="main_table">
+        <div className="table_header">
+            <h2>Government Database<p><i>click record for more details</i></p></h2>
+            <input
+                className="searchinput"
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+            />
+        </div>
+        <table className="table">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th style={{textAlign: "center"}}>Delete</th>
+            </tr>
+            {filteredData.map(i => {
+                    return (
+                        <tr key={i._id} onClick={() => handleRowClick(i)}>
+                            <td>{i.metamask}</td>
+                            <td>{i.fname}</td>
+                            <td>{i.email}</td>
+                            <td style={{textAlign: "center"}}>
+                                <FontAwesomeIcon icon={faTrash} onClick={() => deleteGov(i._id, i.fname)}/>
+                            </td>
+                        </tr>
+                    );
+                })}
+        </table>
+        {selectedGov && (
+            <GovDetailsPopup
+                i = {selectedGov}
+                onClose={() => setSelectedGov(null)}
+            />
+        )}
+    </div>
   );
-}
+};
+
+export default GovTable;

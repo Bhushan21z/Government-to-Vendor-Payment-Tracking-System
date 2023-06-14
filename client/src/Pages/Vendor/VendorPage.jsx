@@ -3,10 +3,10 @@ import { useContext, useEffect } from "react";
 import { TransactionContext } from "../../context/TransactionContext";
 import Navbar from '../../components/Navbar'
 import { Grid, Typography } from "@mui/material"
-import Form from '../../components/State/form2'
-import Leftbar from '../../components/State/leftbar2'
-import Rightbar from "../../components/State/rightbar2"
-import Dashboard from '../../components/State/dashboard2';
+import Form from '../../components/Department/form4'
+import Leftbar from '../../components/Department/leftbar4'
+import Rightbar from "../../components/Department/rightbar4"
+import Dashboard from '../../components/Department/dashboard4';
 import { Divider } from '@mui/material'
 
 
@@ -44,14 +44,14 @@ const Governmentpage = () => {
                 color: '#000',
                 
             }}
-            >Maharashtra Government</Typography>
-            <Form />
+            >Vendor Name</Typography>
+            {/* <Form /> */}
             <Dashboard />
             </Grid>
 
 
             <Grid  item xs={2} > 
-            <Rightbar />
+            {/* <Rightbar /> */}
             
             </Grid>
 
